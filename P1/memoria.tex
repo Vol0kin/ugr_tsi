@@ -1,0 +1,176 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}	% Utilizar español
+\usepackage[utf8]{inputenc}					% Caracteres UTF-8
+\usepackage{graphicx}						% Imagenes
+\usepackage[hidelinks]{hyperref}			% Poner enlaces sin marcarlos en rojo
+\usepackage{fancyhdr}						% Modificar encabezados y pies de pagina
+\usepackage{float}							% Insertar figuras
+\usepackage[textwidth=390pt]{geometry}		% Anchura de la pagina
+\usepackage[nottoc]{tocbibind}				% Referencias (no incluir num pagina indice en Indice)
+\usepackage{enumitem}						% Permitir enumerate con distintos simbolos
+\usepackage[T1]{fontenc}					% Usar textsc en sections
+\usepackage{amsmath}						% Símbolos matemáticos
+\usepackage{algorithm}						% Environtment algorithm
+\usepackage{algpseudocode}					% Pseudocodigo
+
+% Comando para poner el nombre de la asignatura
+\newcommand{\asignatura}{Técnicas de los Sistemas Inteligentes}
+
+% Configuracion de encabezados y pies de pagina
+\pagestyle{fancy}
+\lhead{Vladislav Nikolov, Carlos Núñez}
+\rhead{\asignatura{}}
+\lfoot{Grado en Ingeniería Informática}
+\cfoot{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}		% Linea cabeza de pagina
+\renewcommand{\footrulewidth}{0.4pt}		% Linea pie de pagina
+
+\begin{document}
+\pagenumbering{gobble}
+
+% Pagina de titulo
+\begin{titlepage}
+
+\begin{minipage}{\textwidth}
+
+\centering
+
+\includegraphics[scale=0.5]{img/ugr.png}\\
+
+\textsc{\Large \asignatura{}\\[0.2cm]}
+\textsc{GRADO EN INGENIERÍA INFORMÁTICA}\\[1cm]
+
+\noindent\rule[-1ex]{\textwidth}{1pt}\\[1.5ex]
+\textsc{{\Huge PRÁCTICA 1\\[0.5ex]}}
+\textsc{{\Large Técnicas de Búsqueda\\}}
+\noindent\rule[-1ex]{\textwidth}{2pt}\\[3.5ex]
+
+\end{minipage}
+
+\vspace{0.4cm}
+
+\begin{minipage}{\textwidth}
+
+\centering
+
+\textbf{Autores}\\ {Vladislav Nikolov Vasilev}\\ {Carlos Núñez Molina}\\[2ex]
+\textbf{Rama}\\ {Computación y Sistemas Inteligentes}\\[2ex]
+\vspace{0.3cm}
+
+\includegraphics[scale=0.3]{img/etsiit.jpeg}
+
+\vspace{0.7cm}
+\textsc{Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación}\\
+\vspace{1cm}
+\textsc{Curso 2018-2019}
+\end{minipage}
+\end{titlepage}
+
+\pagenumbering{arabic}
+\tableofcontents
+\thispagestyle{empty}				% No usar estilo en la pagina de indice
+
+\newpage
+
+\setlength{\parskip}{1em}
+
+\section{\textsc{Descripción general de la solución}}
+
+El aspecto fundamental de la práctica es cómo elegir qué gemas coger y en qué orden. Hay en total 23
+gemas por nivel, de las cuales solo se necesitan coger 9. Si se hacen los cálculos, hay
+${23\choose 9} \cdot 9! = 296541907200$ combinaciones posibles. Este número es inabarcable para el
+A*, sin importar la estrategia usada, por lo que no podemos usarlo para que resuelva el nivel desde
+cero: hace falta simplificar el problema.
+
+Para reducir el número de posibilidades se ha usado una estrategia de \textit{clustering}, técnica de
+aprendizaje no supervisado. La heurística detrás de esto es la siguiente: si nos encontramos en un
+\textit{cluster} (grupo) de gemas, al estar estas gemas todas juntas, generalmente será una buena idea
+(un buen plan) coger todas las gemas del \textit{cluster} antes de irse a otro. Por tanto, hemos
+transformado el problema de qué gemas coger y en qué orden al problema de qué \textit{clusters} de
+gemas coger y en qué orden. Como el número de \textit{clusters} es mucho menor que el de gemas, este
+problema sí que es abordable. Para generar los \textit{clusters} se ha usado un algoritmo llamado
+\textit{DBSCAN}. Su funcionamiento (implementado) es el siguiente: se va iterando por todas las gemas
+del nivel; si esa gema no pertenece a un \textit{cluster} y no hay otra gema de algún \textit{cluster}
+cerca suya se crea un nuevo \textit{cluster} y se asigna a él; después se ve qué otras gemas sin
+\textit{cluster} están cerca de ésta y se asignan al mismo \textit{cluster}. Una gema está cerca de
+otra si su distancia Manhattan es menor o igual a un parámetro $\varepsilon$ del método. En la
+práctica se ha usado $\varepsilon = 3$, que es el que genera mejores \textit{clusters}. Para elegir el
+\textit{tour} (camino) a través de los \textit{clusters} se ha usado un simple algoritmo de
+\textit{Branch}\&\textit{Bound}, que devuelve un camino a través de \textit{clusters} de forma que en
+total se consigan el número de gemas necesarias para abandonar el nivel, siendo el camino elegido en
+función de la distancia entre los \textit{clusters} y la ``dificultad'' de cada \textit{cluster} (el
+número de rocas, muros y enemigos en el \textit{cluster} y cómo de alejadas están sus gemas).
+
+De esta forma, esta es la estrategia fundamental usada en la resolución de la práctica: agrupar las
+gemas en \textit{clusters} e ir yendo de un \textit{cluster} a otro hasta tener 9 gemas, en cuyo caso
+se planifica para abandonar el nivel.
+
+La integración del comportamiento reactivo y deliberativo, a grandes rasgos y en pseudocódigo, es la
+siguiente:
+
+\begin{algorithm}
+\caption{Integración del comportamiento reactivo-deliberativo (I)}
+\begin{algorithmic}[1]
+\Procedure{act}{$ $}
+\If{$primer\_turno$} \Comment{Esto se hace en el constructor}
+	\State crearClusetrsYCircuitos()
+	\State $cluster\_actual \gets 0$
+	\State buscarPlan($cluster\_actual$)
+\algstore{bkact}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Integración del comportamiento reactivo-deliberativo (II)}
+\begin{algorithmic}[1]
+\algrestore{bkact}
+\EndIf
+\State \Comment{Plan creado cuando el jugador puede o va a morir en próx. turnos}
+\If{$plan\_no\_morir$.isEmpty()}
+	\State \textbf{return} $plan\_no\_morir$.first()
+\EndIf
+\If{$num\_gems \geq 9$} \Comment{Dirigirse a la salida si se puede salir}
+	\State buscarPlanAbandonarNivel()
+\EndIf
+\If{$busqueda\_no\_terminada$} \Comment{Búsqueda puede tardar múlt. turnos}
+	\State seguirBuscandoPlan()
+\EndIf
+\If{$busqueda\_terminada$ \textbf{and} $camino\_no\_encontrado$}
+	\State $hay\_que\_replanificar \gets $ true
+	\If{$num\_gems < 9$}
+		\State removeCluster($cluster\_actual$) \Comment{Eliminar \textit{cluster} y recrear circuito}
+		\State crearClusterYCircuito() \Comment{porque el \textit{cluster} es inaccesible}
+	\EndIf
+\EndIf
+\If{$hay\_que\_replanificar$}
+	\State buscarPlan()
+\EndIf
+\If{$busqueda\_terminada$}
+	\If{$plan\_vacio$}
+		\State $cluster\_actual \gets cluster\_actual + 1$
+		\State buscarPlan($cluster\_actual$)
+	\Else
+		\State $accion \gets plan$.first()
+	\EndIf
+\EndIf
+\State \Comment{Parte reactiva: ver si ejecutar la acción del plan o no}
+\If{$enemigos\_cercanos$ \textbf{or} $muerte\_por\_roca$}
+	\State crearPlanNoMorir()
+	\State \textbf{return} $plan\_no\_morir$.first()
+\EndIf
+\If{$jugador\_choca\_con\_roca\_cayendo$}
+	\State \textbf{return} $quedarse\_quieto$
+\EndIf
+\State \textbf{return} $accion$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\section{\textsc{Comportamiento reactivo}}
+
+\section{\textsc{Comportamiento deliberativo}}
+
+
+\end{document}
+
