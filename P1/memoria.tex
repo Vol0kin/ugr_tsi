@@ -5,13 +5,16 @@
 \usepackage[hidelinks]{hyperref}			% Poner enlaces sin marcarlos en rojo
 \usepackage{fancyhdr}						% Modificar encabezados y pies de pagina
 \usepackage{float}							% Insertar figuras
-\usepackage[textwidth=390pt]{geometry}		% Anchura de la pagina
+\usepackage[textwidth=395pt]{geometry}		% Anchura de la pagina
 \usepackage[nottoc]{tocbibind}				% Referencias (no incluir num pagina indice en Indice)
 \usepackage{enumitem}						% Permitir enumerate con distintos simbolos
 \usepackage[T1]{fontenc}					% Usar textsc en sections
 \usepackage{amsmath}						% Símbolos matemáticos
 \usepackage{algorithm}						% Environtment algorithm
 \usepackage{algpseudocode}					% Pseudocodigo
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
 
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Técnicas de los Sistemas Inteligentes}
@@ -75,7 +78,7 @@
 
 \setlength{\parskip}{1em}
 
-\section{\textsc{Descripción general de la solución}}
+\section{\textsc{Descripción General de la Solución}}
 
 El aspecto fundamental de la práctica es cómo elegir qué gemas coger y en qué orden. Hay en total 23
 gemas por nivel, de las cuales solo se necesitan coger 9. Si se hacen los cálculos, hay
@@ -167,10 +170,98 @@ siguiente:
 \end{algorithmic}
 \end{algorithm}
 
-\section{\textsc{Comportamiento reactivo}}
+\section{\textsc{Comportamiento Reactivo}}
 
-\section{\textsc{Comportamiento deliberativo}}
+\newpage
 
+\section{\textsc{Comportamiento Deliberativo}}
+
+Para la realización del comportamiento deliberativo se han implementado tres versiones del A*: una
+que permite ir de una posición inicial a una final, una que permite ir de una posición inicial a
+una final recogiendo las gemas de un \textit{cluster} y una parecida a la anterior pero sin posición
+final. En las tres, aparte de las listas que utiliza el algoritmo, se ha añadido una lista de explorados
+que contiene los nodos visitados y los expandidos para poder hacer una consulta rápida de qué nuevos
+nodos expandir y cuáles no. La lista de nodos cerrados no se revisita, ya que la optimalidad no es lo más
+importante en este caso al estar trabajando a nivel de \textit{cluster} y no de gemas. Como se valora
+mucho la eficiencia en el tiempo, se ha modificado el A* para que las búsquedas se puedan ejecutar en
+varios turnos, guardando la información internamente.
+
+Se han usado 2 heurísticas distintas, una para el A* que busca un camino desde una casilla inicial a
+otra final y otra para el A* que busca un camino que coja todas las gemas de un \textit{cluster}.
+
+\begin{itemize}[label=\textbullet]
+	\item \textbf{Heurística camino, \textit{getHeuristicDistance}}:
+	Obtiene la longitud del camino (número de
+	casillas de separación) que une ambas casillas, pudiendo atravesar rocas pero no muros. Si la
+	casilla inicial y final difieren en su posición $x$ y su posición $y$, aumenta en 1 la distancia
+	(ya que el agente tendrá que girar una vez como mínimo para llegar al destino). Debido a que
+	puede atravesar las rocas (a diferencia del agente), esta es una heurística obtenida mediante un
+	modelo relajado, con lo que es admisible y monótona.
+	\item \textbf{Heurística gemas, \textit{getHeuristicGems}}:
+	Crea un grafo donde las $n$ gemas dadas son 
+	los $n$ nodos y escoge los $n-1$ lados más cortos de este grafo. El coste del lado entre la gema
+	$a$ y $b$ se corresponde con el valor de la distancia entre $a$ y $b$, medida usando
+	$getHeuristicDistance$.
+	
+	Esta heurística devuelve la suma de la distancia de la casilla inicial a la gema más cercana a
+	esta, más la suma de los $n-1$ lados más cortos del grafo mencionado anteriormente, más la
+	distancia de ir de la casilla final a su gema más cercana. La heurística sería admisible y
+	monótona si se usara así, pero hemos decidido multiplicar esta suma por $\alpha = 2$, con lo que
+	deja de ser admisible y monótona, a cambio de aproximar mejor la longitud real del camino, lo que
+	hace que el A* tenga que explorar menos estados. Aunque no consiga la solución óptima de esta
+	forma, hemos hecho pruebas y, de media, este camino no tiene más de 5 casillas de diferencia con
+	el óptimo.
+\end{itemize}
+
+A continuación se procede a mostrar el pseudocódigo de la primera versión del A*, sobre la que se
+comentarán brevemente las otras:
+
+\begin{algorithm}[H]
+\caption{Versión del A* para ir de un inicio a un final}
+\begin{algorithmic}[1]
+\Procedure{buscarPlan}{$inicio, fin, casillas\_ignorar$}
+\State $plan \gets \varepsilon$
+\State Inicializar variables y listas
+\While{\textbf{not} $encontrado$ \textbf{and not} $lista\_abiertos$.empty() \textbf{and not} $timeout$}
+	\State Comprobar si se ha producido $timeout$
+	\State $nodo \gets lista\_abiertos$.getRemoveFirst()
+	\If{$nodo$.posicion() $ = fin$}
+		\State \textbf{$encontrado \gets $ true}
+	\Else{}
+		$vecinos \gets $ obtenerVecinos($nodo$.posicion())
+		\ForEach{$vecino \in vecinos$}
+			\If{posicionValida($vecino$) \textbf{and} $vecino \notin casillas\_ignorar$}
+				\State Generar costes e informacion para el siguiente nodo
+				\If{$vecino$ produce caída de roca}
+					\State Simular caída de rocas y generar nueva información
+				\EndIf
+				\If{ $vecino \notin lista\_explorados$}
+					\State $lista\_abiertos$.add(siguiente nodo)
+					\State $lista\_explorados$.add(siguiente nodo)
+				\EndIf{}
+			\EndIf{}
+		\EndFor
+	\EndIf
+	
+	\State $lista\_cerrados$.addFirst($nodo$)
+\EndWhile
+\If{$timeout$}
+	\State Guardar información
+	\State \textbf{return}
+\EndIf
+\If{$encontrado$}
+	\State $plan \gets$ procesarPlan($lista\_cerrados$.getFirst())
+\EndIf
+\State \textbf{return} $plan$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+Sobre esta implementación de la primera versión se tienen que realizar muy pocas modidicaciones para
+llegar a las otras versiones. En el caso de la segunda, hay que pasarle una lista de gemas que coger,
+comprobar en la línea 7 también si se han cogido todas las gemas y usar una u otra heurística al generar
+un nuevo nodo. En el caso de la tercer versión, respecto a la anterior, no hay que pasarle una posición
+final y en la línea 7 solo comprobar si se han cogido todas las gemas de la lista.
 
 \end{document}
 
