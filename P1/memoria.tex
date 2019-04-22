@@ -172,6 +172,97 @@ siguiente:
 
 \section{\textsc{Comportamiento Reactivo}}
 
+El comportamiento reactivo se ha centrado en decidir si ejecuto la acción del plan ``normal'' (el que es
+obtenido usando el A* para coger las gemas o ir a la salida) o no. Las razones para no hacer esto son
+dos: va a morir/puede morir en los siguientes turnos o el agente se va a chocar con una roca cayendo (con
+lo que no va a poder ejecutar la acción del plan). En el caso de que pueda morir, se crea un plan
+provisional ($plan\_no\_morir$) con las acciones que alejan al agente del peligro. Este plan se ejecutará
+en vez del plan ``normal'' siempre que contenga acciones. Si va a chocarse contra una roca, simplemente
+se queda quieto en ese turno y la acción a ejecutar la aplaza para ejecutarla el siguiente turno (si no
+se repite esta situación).
+
+También, en cada turno, se ve si hay que seguir con la búsqueda (en el caso de que todavía no haya
+terminado el A*) o hay que buscar un nuevo plan (si ya tenemos gemas suficientes para abandonar el nivel,
+si el plan actual está vacío o si no se ha encontrado camino). Esta parte no la incluiré en el
+pseudocódigo porque ya la puse en el apartado anterior. A continuación se puede ver el comportamiento
+reactivo en pseudocódigo:
+
+\begin{algorithm}[H]
+\caption{Pseudocódigo del comportamiento reactivo (I)}
+\begin{algorithmic}[1]
+\Procedure{Reactivo}{$ $}
+\State $enemigos\_cercanos \gets $ false
+\ForEach{$enemigo \in enemigos$}
+	\State \Comment{Solo se tienen en cuenta los enemigos cercanos al jugador si no están}
+	\State \Comment{``encerrados'' (ese enemigo puede llegar hasta el jugador)}
+	\If{$enemigo\_cercano\_a\_jug$ \textbf{and} $camino\_enemigo\_conectado\_a\_jug$}
+		\State $enemigos\_cercanos \gets$ true
+	\EndIf
+\EndFor
+\If{$enemigos\_cercanos$}
+	\State $hay\_que\_replanificar \gets$ true
+	\State $casillas\_validas \gets \emptyset$
+	\ForEach{$casilla \in caillas\_adyacentes\_jugador$}
+		\If{$casilla$.tipo $\neq \lbrace \text{muro, roca} \rbrace$ \textbf{and}
+		$casilla\_no\_roca\_encima$}
+			\State $casillas\_validas$.add($casilla$)
+		\EndIf
+	\EndFor	
+	\If{$casillas\_validas \neq \emptyset$}
+		\State $casillas\_alejadas \gets casillas\_validas$.getCasillasAlejadasEnemigos()
+		\If{$casillas\_alejadas \neq \emptyset$}
+			\State $casilla\_elegia \gets casillas\_alejadas$.getClosestToGoal()
+		\Else
+
+\algstore{reactive}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Pseudocódigo del comportamiento reactivo (II)}
+\begin{algorithmic}
+\algrestore{reactive}
+			\State $casilla\_elegida \gets casillas\_validas$.getFarthestFromEnemies()
+		\EndIf
+		
+		\State $plan\_no\_morir$.add($acciones\_para\_llegar\_a\_casilla\_elegida$)
+	\EndIf	
+\EndIf
+\If{$enemigos\_cercanos$}
+	\State $acciones\_prediccion \gets plan\_no\_morir$.getFirstTwo()
+\Else
+	\State $acciones\_prediccion \gets plan\_normal$.getFirstTwo()
+\EndIf
+\If{$jugadorVaAMorirEnSiguientes2Turnos(acciones\_prediccion)$}
+	\State $hay\_que\_replanificar \gets $ true
+	\If{$jugadorTieneRocaArribaDerechaOIzquierda()$}
+		\State $muerte\_por\_roca \gets$ true
+	\EndIf
+	\If{$muerte\_por\_roca$}
+		\For{$casilla \in \lbrace centro, derecha, izquierda, abajo \rbrace$}
+			\If{$jugador$.avanzar($acciones\_ir\_a\_casilla$).noHaMuerto()}
+				\State $plan\_no\_morir$.add($acciones\_ir\_a\_casilla$)
+			\EndIf
+		\EndFor
+	\EndIf
+\EndIf
+\If{$enemigos\_cercanos$ \textbf{or} $muerte\_por\_roca$}
+	\State \textbf{return} $plan\_no\_morir$.getRemoveFirst()
+\EndIf
+\If{$accion \neq $ ACTION\_NIL}
+	\State \Comment{Ver si no cambia posición y orientación tras ejecutar acción}
+	\If{$jug\_sig\_estado = jugador$}
+		\State \Comment{Ver que jugador no excave debajo de roca}
+		\If{$jug\_no\_va\_a\_excavar\_debajo\_de\_roca$}
+			\State \textbf{return} ACTION\_NIL
+		\EndIf
+	\EndIf
+\EndIf
+\State \textbf{return} $accion$ \Comment{Devolver acción del plan ``normal'' si se ha llegado aquí}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
 \newpage
 
 \section{\textsc{Comportamiento Deliberativo}}
@@ -217,27 +308,28 @@ A continuación se procede a mostrar el pseudocódigo de la primera versión del
 comentarán brevemente las otras:
 
 \begin{algorithm}[H]
-\caption{Versión del A* para ir de un inicio a un final}
+\caption{Pseudocódigo del A* para ir de un inicio a un final sin lista de gemas}
 \begin{algorithmic}[1]
 \Procedure{buscarPlan}{$inicio, fin, casillas\_ignorar$}
-\State $plan \gets \varepsilon$
+\State $plan \gets \emptyset$
 \State Inicializar variables y listas
-\While{\textbf{not} $encontrado$ \textbf{and not} $lista\_abiertos$.empty() \textbf{and not} $timeout$}
+\While{\textbf{not} $encontrado$ \textbf{and} $lista\_abiertos \neq \emptyset$ \textbf{and not}
+		$timeout$}
 	\State Comprobar si se ha producido $timeout$
 	\State $nodo \gets lista\_abiertos$.getRemoveFirst()
 	\If{$nodo$.posicion() $ = fin$}
 		\State \textbf{$encontrado \gets $ true}
-	\Else{}
-		$vecinos \gets $ obtenerVecinos($nodo$.posicion())
+	\Else
+		\State $vecinos \gets $ obtenerVecinos($nodo$.posicion())
 		\ForEach{$vecino \in vecinos$}
 			\If{posicionValida($vecino$) \textbf{and} $vecino \notin casillas\_ignorar$}
-				\State Generar costes e informacion para el siguiente nodo
-				\If{$vecino$ produce caída de roca}
-					\State Simular caída de rocas y generar nueva información
+				\State $siguiente\_nodo \gets$ Información y costes
+				\If{produceCaidaRoca($vecino$)}
+					\State Simular caída de rocas y actualizar información
 				\EndIf
 				\If{ $vecino \notin lista\_explorados$}
-					\State $lista\_abiertos$.add(siguiente nodo)
-					\State $lista\_explorados$.add(siguiente nodo)
+					\State $lista\_abiertos$.addOrdenado($siguiente\_nodo$)
+					\State $lista\_explorados$.add($siguiente\_nodo$)
 				\EndIf{}
 			\EndIf{}
 		\EndFor
@@ -246,8 +338,8 @@ comentarán brevemente las otras:
 	\State $lista\_cerrados$.addFirst($nodo$)
 \EndWhile
 \If{$timeout$}
-	\State Guardar información
-	\State \textbf{return}
+	\State guardarInformacionBusquedaSinTerminar()
+	\State \textbf{return} $plan$
 \EndIf
 \If{$encontrado$}
 	\State $plan \gets$ procesarPlan($lista\_cerrados$.getFirst())
