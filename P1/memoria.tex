@@ -16,6 +16,10 @@
 \algnewcommand\algorithmicforeach{\textbf{for each}}
 \algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
 
+\makeatletter
+\def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
+\makeatother
+
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Técnicas de los Sistemas Inteligentes}
 
@@ -73,6 +77,10 @@
 \pagenumbering{arabic}
 \tableofcontents
 \thispagestyle{empty}				% No usar estilo en la pagina de indice
+\blfootnote{La práctica se ha desarrollado en \textit{Linux} debido a que \textit{Windows} daba
+problemas con las funciones de tiempo. Se recomienda encarecidamente utilizar alguna distribución
+basada en \textit{Linux} junto con un entorno de desarrollo que utilice Java 8 o tener instalada
+dicha versión.}
 
 \newpage
 
