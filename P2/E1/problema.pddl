@@ -1,0 +1,6 @@
+(define (problem belkan-problem)
+	(:domain BELKAN)
+	(:objects player1 - player z1 z2 - zone)
+	(:init (oriented player1 S)  (at player1 z1) (connected z1 N z2))
+	(:goal (AND (oriented player1 E) (at player1 z2)))
+)

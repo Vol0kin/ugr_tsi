@@ -287,3 +287,6 @@ TSWLatexianTemp*
 
 # Zip files
 *.zip
+
+# FF interpreter
+**/ff
