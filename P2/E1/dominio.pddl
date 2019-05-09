@@ -1,14 +1,22 @@
 (define (domain BELKAN)
-  (:requirements :strips :typing)
-  (:types oscar apple algorithm gold rose - objects
-  		  princess prince witch teacher leonardo - npc
+  (:requirements :strips :typing :fluents)
+  (:types items npc player - locatable
+  		  oscar apple algorithm gold rose - items
+  		  princess prince witch teacher leo - npc
   		  player
   		  zone
   )
   (:constants N S E W - orientation)
   (:predicates (oriented ?p - player ?o - orientation)
-  			   (at ?p - player ?z - zone)
-  			   (connected ?z1 - zone ?o - orientation ?z2 - zone))
+  			   (at ?l - locatable ?z - zone)
+  			   (connected ?z1 - zone ?o - orientation ?z2 - zone)
+  			   (emptyhand ?p - player)
+  			   (taken ?obj - items ?p - player)
+  			   (given ?obj - items)
+  )
+  (:functions
+  	(received ?n - npc)
+  )
   (:action turn-left
   	:parameters (?player - player ?)
   	:effect (and
@@ -33,6 +41,35 @@
   	:effect (and
   		(not (at ?p ?z1))
   		(at ?p ?z2)
+  	)
+  )
+  (:action pick-up-item
+  	:parameters (?p - player ?o - items ?z - zone)
+  	:precondition (and (emptyhand ?p) (at ?p ?z) (at ?o ?z) (not (given ?o)))
+  	:effect (and
+  		(not (emptyhand ?p))
+  		(not (at ?o ?z))
+  		(taken ?o ?p)
+  	)
+  )
+  (:action drop-item
+  	:parameters (?p - player ?o - items ?z - zone)
+  	:precondition (and (taken ?o ?p) (at ?p ?z))
+  	:effect (and 
+  		(not (taken ?o ?p))
+  		(emptyhand ?p)
+  		(at ?o ?z)
+  	)
+  )
+  (:action give-item
+  	:parameters (?p - player ?n - npc ?o - items ?z - zone)
+  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z) )
+  	:effect (and
+  		(not (taken ?o ?p))
+  		(emptyhand ?p)
+  		(at ?o ?z)
+  		(given ?o)
+  		(increase (received ?n) 1)
   	)
   )
 )
