@@ -1,17 +1,17 @@
 (define (problem belkan-problem)
 	(:domain BELKAN)
-	(:objects player1 - player 
+	(:objects player1 - Player 
 			  z1 z2 z3 z4 z5 z6 z7 z8 z9 z10 z11 z12 - zone 
-			  oscar1 - oscar
-			  apple1 - apple
-			  algorithm1 - algorithm
-			  gold1 - gold
-			  rose1 - rose
-			  teacher1 - teacher
-			  prince1 - prince
-			  princess1 - princess
-			  leo1 - leo
-			  witch1 - witch
+			  oscar1 - Oscar
+			  apple1 - Manzana
+			  algorithm1 - Algoritmo
+			  gold1 - Oro
+			  rose1 - Rosa
+			  teacher1 - Profesor
+			  prince1 - Principe
+			  princess1 - Princesa
+			  leo1 - Leonardo
+			  witch1 - Bruja
 	)
 	(:init
 		(connected z1 S z3)
@@ -43,11 +43,11 @@
 		(at princess1 z7)
 		(at witch1 z9)
 		(at teacher1 z12)
-		(at apple1 z8)
-		(at algorithm1 z8)
-		(at gold1 z8)
-		(at rose1 z8)
-		(at oscar1 z8)
+		(at apple1 z2)
+		(at algorithm1 z3)
+		(at gold1 z4)
+		(at rose1 z10)
+		(at oscar1 z11)
 		(emptyhand player1)
 		(= (received teacher1) 0)
 		(= (received prince1) 0)
@@ -55,5 +55,13 @@
 		(= (received leo1) 0)
 		(= (received witch1) 0)
 	)
-	(:goal (AND (oriented player1 N) (at player1 z3) (>= (received teacher1) 1) (>= (received prince1) 1) (>= (received princess1) 1) (>= (received witch1) 1) (>= (received leo1) 1) ))
+	(:goal (AND 
+		(oriented player1 N)
+		(at player1 z3)
+		(>= (received teacher1) 1)
+		(>= (received prince1) 1)
+		(>= (received princess1) 1)
+		(>= (received witch1) 1)
+		(>= (received leo1) 1) )
+	)
 )
