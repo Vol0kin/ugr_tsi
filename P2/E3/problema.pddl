@@ -49,6 +49,7 @@
 		(at rose1 z10)
 		(at oscar1 z11)
 		(emptyhand player1)
+		(emptybag player1)
 		(= (traveled player1) 0)
 		(= (received teacher1) 0)
 		(= (received prince1) 0)

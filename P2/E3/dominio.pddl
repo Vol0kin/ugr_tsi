@@ -1,13 +1,15 @@
 (define (domain BELKAN)
   (:requirements :strips :typing :fluents)
-  (:types items npc Player - locatable
-  		  Oscar Manzana Algoritmo Oro Rosa Zapatilla Bikini - items
+  (:types picks npc Player - locatable
+        items utils - picks
+  		  Oscar Manzana Algoritmo Oro Rosa - items
+        Zapatilla Bikini - utils
   		  Princesa Principe Bruja Profesor Leonardo - npc
   		  Player
   		  zone
   )
   (:constants N S E W - orientation
-              Bosque Agua Precipicio Arena Piedra - terrain
+              Bosque Agua Precipicio Arena Piedra - surface
   )
   (:predicates (oriented ?p - Player ?o - orientation)
   			   (at ?l - locatable ?z - zone)
@@ -15,6 +17,9 @@
   			   (emptyhand ?p - Player)
   			   (taken ?obj - items ?p - Player)
   			   (given ?obj - items)
+           (terrain ?z - zone ?s - surface)
+           (emptybag ?p - Player)
+           (inbag ?p - Player ?o - Object)
   )
   (:functions
   	(received ?n - npc)
@@ -49,7 +54,7 @@
   	)
   )
   (:action pick-up-item
-  	:parameters (?p - Player ?o - items ?z - zone)
+  	:parameters (?p - Player ?o - picks ?z - zone)
   	:precondition (and (emptyhand ?p) (at ?p ?z) (at ?o ?z) (not (given ?o)))
   	:effect (and
   		(not (emptyhand ?p))
@@ -58,7 +63,7 @@
   	)
   )
   (:action drop-item
-  	:parameters (?p - Player ?o - items ?z - zone)
+  	:parameters (?p - Player ?o - picks ?z - zone)
   	:precondition (and (taken ?o ?p) (at ?p ?z))
   	:effect (and 
   		(not (taken ?o ?p))
@@ -68,7 +73,7 @@
   )
   (:action give-item
   	:parameters (?p - Player ?n - npc ?o - items ?z - zone)
-  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z) )
+  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z))
   	:effect (and
   		(not (taken ?o ?p))
   		(emptyhand ?p)
@@ -76,6 +81,26 @@
   		(given ?o)
   		(increase (received ?n) 1)
   	)
+  )
+  (:action put-in-bag
+    :parameters (?p - Player ?o - picks)
+    :precondition (and (taken ?o ?p) (emptybag ?p))
+    :effect (and
+      (not (emptybag ?p))
+      (not (taken ?o ?p))
+      (emptyhand ?p)
+      (inbag ?p ?o)
+    )
+  )
+  (:action get-from-bag
+    :parameters (?p - Player ?o - picks)
+    :precondition (and (inbag ?p ?o) (emptyhand ?p))
+    :effect (and
+      (not (inbag ?p ?o))
+      (not (emptyhand ?p))
+      (taken ?o ?p)
+      (emptybag ?p)
+    )
   )
 )
 
