@@ -12,6 +12,8 @@
 			  princess1 - Princesa
 			  leo1 - Leonardo
 			  witch1 - Bruja
+			  shoe1 - Zapatilla
+			  bikini1 - Bikini
 	)
 	(:init
 		(connected z1 S z3)
@@ -36,6 +38,18 @@
 		(connected z11 W z10)
 		(connected z11 E z12)
 		(connected z12 W z11)
+		(terrain z1 Piedra)
+		(terrain z2 Agua)
+		(terrain z3 Arena)
+		(terrain z4 Piedra)
+		(terrain z5 Bosque)
+		(terrain z5 Piedra)
+		(terrain z7 Arena)
+		(terrain z8 Piedra)
+		(terrain z9 Arena)
+		(terrain z10 Arena)
+		(terrain z11 Bosque)
+		(terrain z12 Arena)
 		(oriented player1 S)
 		(at player1 z8)
 		(at leo1 z1)
@@ -48,6 +62,10 @@
 		(at gold1 z4)
 		(at rose1 z10)
 		(at oscar1 z11)
+		(at shoe1 z9)
+		(is_zapatilla shoe1)
+		(at bikini1 z10)
+		(is_bikini bikini1)
 		(emptyhand player1)
 		(emptybag player1)
 		(= (traveled player1) 0)

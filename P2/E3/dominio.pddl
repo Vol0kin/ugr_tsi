@@ -1,9 +1,7 @@
 (define (domain BELKAN)
   (:requirements :strips :typing :fluents)
-  (:types picks npc Player - locatable
-        items utils - picks
-  		  Oscar Manzana Algoritmo Oro Rosa - items
-        Zapatilla Bikini - utils
+  (:types items npc Player - locatable
+  		  Oscar Manzana Algoritmo Oro Rosa Zapatilla Bikini - items
   		  Princesa Principe Bruja Profesor Leonardo - npc
   		  Player
   		  zone
@@ -19,7 +17,9 @@
   			   (given ?obj - items)
            (terrain ?z - zone ?s - surface)
            (emptybag ?p - Player)
-           (inbag ?p - Player ?o - Object)
+           (inbag ?o - Object ?p - Player)
+           (is_zapatilla ?o - items)
+           (is_bikini ?o - items)
   )
   (:functions
   	(received ?n - npc)
@@ -45,16 +45,24 @@
   	)
   )
   (:action move
-  	:parameters (?p - Player ?z1 ?z2 - zone ?o - orientation)
-  	:precondition (and (at ?p ?z1) (connected ?z1 ?o ?z2) (oriented ?p ?o))
+  	:parameters (?p - Player ?z1 ?z2 - zone ?o - orientation ?it - items)
+  	:precondition (and (at ?p ?z1) (connected ?z1 ?o ?z2) (oriented ?p ?o) (not (terrain ?z2 Precipicio)))
   	:effect (and
-  		(not (at ?p ?z1))
-  		(at ?p ?z2)
-      (increase (traveled ?p) (distance ?z1 ?z2))
-  	)
+      (when (or 
+              (and (not (terrain ?z2 Bosque)) (not (terrain ?z2 Agua)))
+              (and (terrain ?z2 Bosque) (is_zapatilla ?it) (or (taken ?it ?p) (inbag ?it ?p)))
+              (and (terrain ?z2 Agua) (is_bikini ?it) (or (taken ?it ?p) (inbag ?it ?p)))
+            ) 
+  		  (and
+          (not (at ?p ?z1))
+  		    (at ?p ?z2)
+          (increase (traveled ?p) (distance ?z1 ?z2))
+        )
+      )
+    )
   )
   (:action pick-up-item
-  	:parameters (?p - Player ?o - picks ?z - zone)
+  	:parameters (?p - Player ?o - items ?z - zone)
   	:precondition (and (emptyhand ?p) (at ?p ?z) (at ?o ?z) (not (given ?o)))
   	:effect (and
   		(not (emptyhand ?p))
@@ -63,8 +71,8 @@
   	)
   )
   (:action drop-item
-  	:parameters (?p - Player ?o - picks ?z - zone)
-  	:precondition (and (taken ?o ?p) (at ?p ?z))
+  	:parameters (?p - Player ?o - items ?z - zone)
+  	:precondition (and (taken ?o ?p) (at ?p ?z) (not (emptybag ?p)))
   	:effect (and 
   		(not (taken ?o ?p))
   		(emptyhand ?p)
@@ -73,7 +81,7 @@
   )
   (:action give-item
   	:parameters (?p - Player ?n - npc ?o - items ?z - zone)
-  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z))
+  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z) (not (is_zapatilla ?o)))
   	:effect (and
   		(not (taken ?o ?p))
   		(emptyhand ?p)
@@ -83,20 +91,20 @@
   	)
   )
   (:action put-in-bag
-    :parameters (?p - Player ?o - picks)
+    :parameters (?p - Player ?o - items)
     :precondition (and (taken ?o ?p) (emptybag ?p))
     :effect (and
       (not (emptybag ?p))
       (not (taken ?o ?p))
       (emptyhand ?p)
-      (inbag ?p ?o)
+      (inbag ?o ?p)
     )
   )
   (:action get-from-bag
-    :parameters (?p - Player ?o - picks)
-    :precondition (and (inbag ?p ?o) (emptyhand ?p))
+    :parameters (?p - Player ?o - items)
+    :precondition (and (inbag ?o ?p) (emptyhand ?p))
     :effect (and
-      (not (inbag ?p ?o))
+      (not (inbag ?o ?p))
       (not (emptyhand ?p))
       (taken ?o ?p)
       (emptybag ?p)
