@@ -17,7 +17,7 @@
   (:functions
   	(received ?n - npc)
     (distance ?z1 ?z2 - zone)
-    (traveled ?p - player)
+    (traveled ?p - Player)
   )
   (:action turn-left
   	:parameters (?p - Player ?)

@@ -2,11 +2,8 @@
 	(:domain BELKAN)
 	(:objects player1 - Player 
 			  z1 z2 z3 z4 z5 z6 z7 z8 z9 z10 z11 z12 z13 - zone 
-			  oscar1 - Oscar
-			  apple1 - Manzana
-			  algorithm1 - Algoritmo
-			  gold1 - Oro
-			  rose1 - Rosa
+			  oscar1 oscar2 oscar3 - Oscar
+			  apple1 apple2 apple3 - Manzana
 			  teacher1 - Profesor
 			  prince1 - Principe
 			  princess1 - Princesa
@@ -62,11 +59,12 @@
 		(at princess1 z7)
 		(at witch1 z9)
 		(at teacher1 z12)
-		(at apple1 z2)
-		(at algorithm1 z3)
-		(at gold1 z4)
-		(at rose1 z10)
-		(at oscar1 z11)
+		(at apple1 z10)
+		(at apple2 z8)
+		(at apple3 z9)
+		(at oscar2 z2)
+		(at oscar1 z3)
+		(at oscar3 z11)
 		(at shoe1 z9)
 		(is_zapatilla shoe1)
 		(at bikini1 z10)
@@ -105,13 +103,40 @@
 		(= (distance z13 z2) 1)
 		(= (distance z1 z13) 1)
 		(= (distance z13 z1) 1)
+		(= (total_score player1) 0)
+		(= (score leo1 oscar1) 10)
+		(= (score leo1 oscar2) 10)
+		(= (score leo1 oscar3) 10)
+		(= (score leo1 apple1) 3)
+		(= (score leo1 apple2) 3)
+		(= (score leo1 apple3) 3)
+		(= (score princess1 oscar1) 5)
+		(= (score princess1 oscar2) 5)
+		(= (score princess1 oscar3) 5)
+		(= (score princess1 apple1) 1)
+		(= (score princess1 apple2) 1)
+		(= (score princess1 apple3) 1)
+		(= (score witch1 oscar1) 4)
+		(= (score witch1 oscar2) 4)
+		(= (score witch1 oscar3) 4)
+		(= (score witch1 apple1) 10)
+		(= (score witch1 apple2) 10)
+		(= (score witch1 apple3) 10)
+		(= (score teacher1 oscar1) 3)
+		(= (score teacher1 oscar2) 3)
+		(= (score teacher1 oscar3) 3)
+		(= (score teacher1 apple1) 5)
+		(= (score teacher1 apple2) 5)
+		(= (score teacher1 apple3) 5)
+		(= (score prince1 oscar1) 1)
+		(= (score prince1 oscar2) 1)
+		(= (score prince1 oscar2) 1)
+		(= (score prince1 apple1) 4)
+		(= (score prince1 apple2) 4)
+		(= (score prince1 apple3) 4)
 	)
 	(:goal (AND
-		(>= (received teacher1) 1)
-		(>= (received prince1) 1)
-		(>= (received princess1) 1)
-		(>= (received witch1) 1)
-		(>= (received leo1) 1) )
+		(= (total_score player1) 50))
 	)
 	(:metric minimize (traveled player1))
 )

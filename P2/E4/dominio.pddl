@@ -25,6 +25,8 @@
   	(received ?n - npc)
     (distance ?z1 ?z2 - zone)
     (traveled ?p - Player)
+    (total_score ?p - Player)
+    (score ?n - npc ?o - items)
   )
   (:action turn-left
   	:parameters (?p - Player ?)
@@ -88,6 +90,7 @@
   		(at ?o ?z)
   		(given ?o)
   		(increase (received ?n) 1)
+      (increase (total_score ?p) (score ?n ?o))
   	)
   )
   (:action put-in-bag
