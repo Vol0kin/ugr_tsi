@@ -1,0 +1,135 @@
+
+ff: parsing domain file
+domain 'EJERCICIO1' defined
+ ... done.
+ff: parsing problem file
+problem 'BELKAN-PROBLEM' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:   21 into depth [1][2][3][4]
+                                  20            [1][2][3][4]
+                                  19            [1][2]
+                                  18            [1][2][3][4]
+                                  17            [1]
+                                  16            [1][2][3][4][5][6][7][8][9]
+                                  15            [1][2]
+                                  14            [1][2][3][4][5][6]
+                                  13            [1][2][3][4][5][6]
+                                  12            [1][2][3][4][5][6][7][8][9]
+                                  11            [1]
+                                  10            [1]
+                                   9            [1][2][3][4][5][6][7][8]
+                                   8            [1][2][3][4]
+                                   7            [1][2][3][4][5][6]
+                                   6            [1]
+                                   5            [1]
+                                   4            [1][2]
+                                   3            [1]
+                                   2            [1][2][3][4][5][6]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: MOVE PLAYER1 Z8 Z10 S
+        1: TURN-RIGHT PLAYER1
+        2: PICK-UP-ITEM PLAYER1 ROSE1 Z10
+        3: MOVE PLAYER1 Z10 Z9 W
+        4: TURN-LEFT PLAYER1
+        5: GIVE-ITEM PLAYER1 WITCH1 ROSE1 Z9
+        6: TURN-LEFT PLAYER1
+        7: MOVE PLAYER1 Z9 Z10 E
+        8: TURN-LEFT PLAYER1
+        9: MOVE PLAYER1 Z10 Z8 N
+       10: MOVE PLAYER1 Z8 Z5 N
+       11: TURN-LEFT PLAYER1
+       12: MOVE PLAYER1 Z5 Z4 W
+       13: PICK-UP-ITEM PLAYER1 GOLD1 Z4
+       14: TURN-RIGHT PLAYER1
+       15: TURN-RIGHT PLAYER1
+       16: TURN-RIGHT PLAYER1
+       17: MOVE PLAYER1 Z4 Z7 S
+       18: TURN-RIGHT PLAYER1
+       19: TURN-RIGHT PLAYER1
+       20: GIVE-ITEM PLAYER1 PRINCESS1 GOLD1 Z7
+       21: MOVE PLAYER1 Z7 Z4 N
+       22: TURN-RIGHT PLAYER1
+       23: MOVE PLAYER1 Z4 Z5 E
+       24: TURN-LEFT PLAYER1
+       25: MOVE PLAYER1 Z5 Z2 N
+       26: TURN-RIGHT PLAYER1
+       27: TURN-RIGHT PLAYER1
+       28: MOVE PLAYER1 Z2 Z5 S
+       29: MOVE PLAYER1 Z5 Z8 S
+       30: MOVE PLAYER1 Z8 Z10 S
+       31: TURN-LEFT PLAYER1
+       32: MOVE PLAYER1 Z10 Z11 E
+       33: TURN-RIGHT PLAYER1
+       34: TURN-RIGHT PLAYER1
+       35: PICK-UP-ITEM PLAYER1 OSCAR1 Z11
+       36: MOVE PLAYER1 Z11 Z10 W
+       37: TURN-RIGHT PLAYER1
+       38: TURN-RIGHT PLAYER1
+       39: MOVE PLAYER1 Z10 Z11 E
+       40: MOVE PLAYER1 Z11 Z12 E
+       41: TURN-RIGHT PLAYER1
+       42: TURN-RIGHT PLAYER1
+       43: GIVE-ITEM PLAYER1 TEACHER1 OSCAR1 Z12
+       44: MOVE PLAYER1 Z12 Z11 W
+       45: MOVE PLAYER1 Z11 Z10 W
+       46: TURN-RIGHT PLAYER1
+       47: MOVE PLAYER1 Z10 Z8 N
+       48: MOVE PLAYER1 Z8 Z5 N
+       49: MOVE PLAYER1 Z5 Z2 N
+       50: TURN-RIGHT PLAYER1
+       51: MOVE PLAYER1 Z2 Z3 E
+       52: TURN-RIGHT PLAYER1
+       53: TURN-RIGHT PLAYER1
+       54: PICK-UP-ITEM PLAYER1 ALGORITHM1 Z3
+       55: MOVE PLAYER1 Z3 Z2 W
+       56: TURN-RIGHT PLAYER1
+       57: TURN-RIGHT PLAYER1
+       58: TURN-RIGHT PLAYER1
+       59: MOVE PLAYER1 Z2 Z5 S
+       60: TURN-LEFT PLAYER1
+       61: MOVE PLAYER1 Z5 Z6 E
+       62: TURN-RIGHT PLAYER1
+       63: TURN-RIGHT PLAYER1
+       64: GIVE-ITEM PLAYER1 PRINCE1 ALGORITHM1 Z6
+       65: MOVE PLAYER1 Z6 Z5 W
+       66: TURN-RIGHT PLAYER1
+       67: MOVE PLAYER1 Z5 Z2 N
+       68: PICK-UP-ITEM PLAYER1 APPLE1 Z2
+       69: TURN-RIGHT PLAYER1
+       70: MOVE PLAYER1 Z2 Z3 E
+       71: TURN-LEFT PLAYER1
+       72: MOVE PLAYER1 Z3 Z1 N
+       73: TURN-RIGHT PLAYER1
+       74: TURN-RIGHT PLAYER1
+       75: GIVE-ITEM PLAYER1 LEO1 APPLE1 Z1
+       76: MOVE PLAYER1 Z1 Z3 S
+       77: TURN-RIGHT PLAYER1
+       78: TURN-RIGHT PLAYER1
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 444 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 97 facts and 169 actions
+               0.00 seconds creating final representation with 92 relevant facts, 5 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.01 seconds searching, evaluating 509 states, to a max depth of 9
+               0.01 seconds total time
+

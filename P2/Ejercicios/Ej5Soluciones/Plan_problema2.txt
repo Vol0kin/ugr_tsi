@@ -1,0 +1,108 @@
+
+ff: parsing domain file
+domain 'EJERCICIO5' defined
+ ... done.
+ff: parsing problem file
+problem 'BELKAN-PROBLEM' defined
+ ... done.
+
+
+
+no optimization required. skipping criterion.
+
+
+no metric specified. plan length assumed.
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:   18 into depth [1][2]
+                                  17            [1]
+                                  14            [1]
+                                  13            [1][2]
+                                  12            [1][2][3]
+                                  11            [1]
+                                   8            [1]
+                                   4            [1][2][3][4][5][6][7][8][9][10][11][12][13]
+                                   3            [1][2][3][4][5][6][7][8][9][10][11][12][13][14][15][16][17][18][19][20][21][22][23][24][25][26][27][28][29][30][31][32]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: MOVE PLAYER1 Z8 Z10 S BIKINI1
+        1: TURN-RIGHT PLAYER1
+        2: MOVE PLAYER1 Z10 Z9 W BIKINI1
+        3: TURN-RIGHT PLAYER1
+        4: PICK-UP-ITEM PLAYER1 SHOE1 Z9
+        5: PUT-IN-BAG PLAYER1 SHOE1
+        6: TURN-RIGHT PLAYER1
+        7: PICK-UP-ITEM PLAYER1 APPLE3 Z9
+        8: MOVE PLAYER1 Z9 Z10 E BIKINI1
+        9: MOVE PLAYER1 Z10 Z11 E SHOE1
+       10: MOVE PLAYER1 Z11 Z12 E BIKINI1
+       11: GIVE-ITEM PLAYER1 TEACHER1 APPLE3 Z12
+       12: TURN-LEFT PLAYER1
+       13: TURN-LEFT PLAYER1
+       14: MOVE PLAYER1 Z12 Z11 W SHOE1
+       15: PICK-UP-ITEM PLAYER1 OSCAR3 Z11
+       16: MOVE PLAYER1 Z11 Z10 W BIKINI1
+       17: TURN-RIGHT PLAYER1
+       18: MOVE PLAYER1 Z10 Z8 N BIKINI1
+       19: MOVE PLAYER1 Z8 Z5 N SHOE1
+       20: TURN-LEFT PLAYER1
+       21: MOVE PLAYER1 Z5 Z4 W BIKINI1
+       22: TURN-LEFT PLAYER1
+       23: MOVE PLAYER1 Z4 Z7 S BIKINI1
+       24: GIVE-ITEM PLAYER1 PRINCESS1 OSCAR3 Z7
+       25: TURN-RIGHT PLAYER1
+       26: TURN-RIGHT PLAYER1
+       27: MOVE PLAYER1 Z7 Z4 N BIKINI1
+       28: TURN-RIGHT PLAYER1
+       29: MOVE PLAYER1 Z4 Z5 E SHOE1
+       30: TURN-RIGHT PLAYER1
+       31: MOVE PLAYER1 Z5 Z8 S BIKINI1
+       32: TURN-RIGHT PLAYER1
+       33: TURN-RIGHT PLAYER1
+       34: PICK-UP-ITEM PLAYER1 APPLE2 Z8
+       35: MOVE PLAYER1 Z8 Z5 N SHOE1
+       36: TURN-RIGHT PLAYER1
+       37: MOVE PLAYER1 Z5 Z6 E BIKINI1
+       38: GIVE-ITEM PLAYER1 PRINCE1 APPLE2 Z6
+       39: TURN-RIGHT PLAYER1
+       40: TURN-RIGHT PLAYER1
+       41: MOVE PLAYER1 Z6 Z5 W SHOE1
+       42: TURN-LEFT PLAYER1
+       43: MOVE PLAYER1 Z5 Z8 S BIKINI1
+       44: MOVE PLAYER1 Z8 Z10 S BIKINI1
+       45: TURN-RIGHT PLAYER1
+       46: PICK-UP-ITEM PLAYER1 BIKINI1 Z10
+       47: TURN-RIGHT PLAYER1
+       48: MOVE PLAYER1 Z10 Z8 N BIKINI1
+       49: MOVE PLAYER1 Z8 Z5 N SHOE1
+       50: MOVE PLAYER1 Z5 Z2 N BIKINI1
+       51: TURN-RIGHT PLAYER1
+       52: DROP-ITEM PLAYER1 BIKINI1 Z2
+       53: MOVE PLAYER1 Z2 Z3 E BIKINI1
+       54: TURN-LEFT PLAYER1
+       55: PICK-UP-ITEM PLAYER1 OSCAR1 Z3
+       56: MOVE PLAYER1 Z3 Z1 N BIKINI1
+       57: GIVE-ITEM PLAYER1 LEO1 OSCAR1 Z1
+     		Coste Total: 0.00
+
+
+time spent:    0.01 seconds instantiating 681 easy, 192 hard action templates
+               0.00 seconds reachability analysis, yielding 151 facts and 415 actions
+               0.00 seconds creating final representation with 145 relevant facts, 12 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.03 seconds searching, evaluating 631 states, to a max depth of 32
+               0.04 seconds total time
+
