@@ -103,7 +103,7 @@
 		(= (distance z13 z2) 1)
 		(= (distance z1 z13) 1)
 		(= (distance z13 z1) 1)
-		(= (total_score player1) 0)
+		(= (total_score) 0)
 		(= (score leo1 oscar1) 10)
 		(= (score leo1 oscar2) 10)
 		(= (score leo1 oscar3) 10)
@@ -141,7 +141,7 @@
 		(= (pocket-capacity prince1) 1)
 	)
 	(:goal (AND
-		(>= (total_score player1) 20))
+		(>= (total_score) 20))
 	)
 	(:metric minimize (traveled player1))
 )

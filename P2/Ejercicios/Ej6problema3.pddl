@@ -1,6 +1,6 @@
 (define (problem belkan-problem)
-	(:domain Ejercicio5)
-	(:objects player1 - Player 
+	(:domain Ejercicio6)
+	(:objects player1 player2 - Player 
 			  z1 z2 z3 z4 z5 z6 z7 z8 z9 z10 z11 z12 z13 - zone 
 			  oscar1 oscar2 oscar3 - Oscar
 			  apple1 apple2 apple3 - Manzana
@@ -53,7 +53,9 @@
 		(terrain z12 Arena)
 		(terrain z13 Precipicio)
 		(oriented player1 S)
+		(oriented player2 S)
 		(at player1 z8)
+		(at player2 z10)
 		(at leo1 z1)
 		(at prince1 z6)
 		(at princess1 z7)
@@ -71,7 +73,10 @@
 		(is_bikini bikini1)
 		(emptyhand player1)
 		(emptybag player1)
+		(emptyhand player2)
+		(emptybag player2)
 		(= (traveled player1) 0)
+		(= (traveled player2) 0)
 		(= (received teacher1) 0)
 		(= (received prince1) 0)
 		(= (received princess1) 0)
@@ -104,6 +109,8 @@
 		(= (distance z1 z13) 1)
 		(= (distance z13 z1) 1)
 		(= (total_score) 0)
+		(= (player-score player1) 0)
+		(= (player-score player2) 0)
 		(= (score leo1 oscar1) 10)
 		(= (score leo1 oscar2) 10)
 		(= (score leo1 oscar3) 10)
@@ -136,12 +143,14 @@
 		(= (score prince1 apple3) 4)
 		(= (pocket-capacity teacher1) 1)
 		(= (pocket-capacity leo1) 3)
-		(= (pocket-capacity witch1) 0)
+		(= (pocket-capacity witch1) 2)
 		(= (pocket-capacity princess1) 1)
 		(= (pocket-capacity prince1) 1)
 	)
 	(:goal (AND
-		(>= (total_score) 20))
+		(>= (total_score) 20)
+		(>= (player-score player1) 10)
+		(>= (player-score player2) 10)
+		)
 	)
-	(:metric minimize (traveled player1))
 )

@@ -25,7 +25,7 @@
   	(received ?n - npc)
     (distance ?z1 ?z2 - zone)
     (traveled ?p - Player)
-    (total_score ?p - Player)
+    (total_score)
     (score ?n - npc ?o - items)
     (pocket-capacity ?n - npc)
   )
@@ -91,7 +91,7 @@
   		(at ?o ?z)
   		(given ?o)
   		(increase (received ?n) 1)
-      (increase (total_score ?p) (score ?n ?o))
+      (increase (total_score) (score ?n ?o))
   	)
   )
   (:action put-in-bag

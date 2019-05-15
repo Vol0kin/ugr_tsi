@@ -1,4 +1,4 @@
-(define (domain Ejercicio4)
+(define (domain Ejercicio6)
   (:requirements :strips :typing :fluents)
   (:types items npc Player - locatable
   		  Oscar Manzana Algoritmo Oro Rosa Zapatilla Bikini - items
@@ -25,8 +25,10 @@
   	(received ?n - npc)
     (distance ?z1 ?z2 - zone)
     (traveled ?p - Player)
+    (player-score ?p)
     (total_score)
     (score ?n - npc ?o - items)
+    (pocket-capacity ?n - npc)
   )
   (:action turn-left
   	:parameters (?p - Player ?)
@@ -83,7 +85,7 @@
   )
   (:action give-item
   	:parameters (?p - Player ?n - npc ?o - items ?z - zone)
-  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z) (not (is_zapatilla ?o)))
+  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z) (not (is_zapatilla ?o)) (> (pocket-capacity ?n) (received ?n)))
   	:effect (and
   		(not (taken ?o ?p))
   		(emptyhand ?p)
@@ -91,6 +93,7 @@
   		(given ?o)
   		(increase (received ?n) 1)
       (increase (total_score) (score ?n ?o))
+      (increase (player-score ?p) (score ?n ?o))
   	)
   )
   (:action put-in-bag
