@@ -40,11 +40,11 @@ step    0: PICK-UP-ITEM PLAYER1 APPLE2 Z8
         8: MOVE PLAYER1 Z10 Z9 W BIKINI1
         9: GIVE-ITEM-DEALER PLAYER1 PLAYER2 APPLE1 Z9
        10: GIVE-ITEM-NPC PLAYER2 WITCH1 APPLE1 Z9
-     		Coste Total: 0.00
+        Coste Total: 0.00
 
 
-time spent:    0.00 seconds instantiating 907 easy, 384 hard action templates
-               0.00 seconds reachability analysis, yielding 186 facts and 801 actions
+time spent:    0.00 seconds instantiating 907 easy, 276 hard action templates
+               0.00 seconds reachability analysis, yielding 186 facts and 705 actions
                0.00 seconds creating final representation with 180 relevant facts, 14 relevant fluents
                0.00 seconds computing LNF
                0.00 seconds building connectivity graph

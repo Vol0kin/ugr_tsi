@@ -46,19 +46,17 @@
   )
   (:action move
   	:parameters (?p - Player ?z1 ?z2 - zone ?o - orientation ?it - items)
-  	:precondition (and (at ?p ?z1) (connected ?z1 ?o ?z2) (oriented ?p ?o) (not (terrain ?z2 Precipicio)))
+  	:precondition (and (at ?p ?z1) (connected ?z1 ?o ?z2) (oriented ?p ?o) (not (terrain ?z2 Precipicio))
+                  (or 
+                    (and (not (terrain ?z2 Bosque)) (not (terrain ?z2 Agua)))
+                    (and (terrain ?z2 Bosque) (is_zapatilla ?it) (or (taken ?it ?p) (inbag ?it ?p)))
+                    (and (terrain ?z2 Agua) (is_bikini ?it) (or (taken ?it ?p) (inbag ?it ?p)))
+                  )
+    )
   	:effect (and
-      (when (or 
-              (and (not (terrain ?z2 Bosque)) (not (terrain ?z2 Agua)))
-              (and (terrain ?z2 Bosque) (is_zapatilla ?it) (or (taken ?it ?p) (inbag ?it ?p)))
-              (and (terrain ?z2 Agua) (is_bikini ?it) (or (taken ?it ?p) (inbag ?it ?p)))
-            ) 
-  		  (and
           (not (at ?p ?z1))
   		    (at ?p ?z2)
           (increase (traveled ?p) (distance ?z1 ?z2))
-        )
-      )
     )
   )
   (:action pick-up-item
