@@ -1,20 +1,19 @@
 import sys
 import re
 
-# Declarar conjuntos que contendran a los personajes
-leonardos = set()
-princesses = set()
-princes = set()
-witches = set()
-teachers = set()
-players = set()
-
-# Declarar conjuntos que contendran los items
-apples = set()
-algorithms = set()
-gold = set()
-oscars = set()
-roses = set()
+# Declarar diccionario que contendra los objetos y los personajes
+npc_obj_dict = {}
+npc_obj_dict['Leonardo'] = set()
+npc_obj_dict['Bruja'] = set()
+npc_obj_dict['Principe'] = set()
+npc_obj_dict['Princesa'] = set()
+npc_obj_dict['Profesor'] = set()
+npc_obj_dict['Player'] = set()
+npc_obj_dict['Oscar'] = set()
+npc_obj_dict['Manzana'] = set()
+npc_obj_dict['Algoritmo'] = set()
+npc_obj_dict['Oro'] = set()
+npc_obj_dict['Rosa'] = set()
 
 # Declarar conjuntos que contendran las zonas
 zones = []
@@ -95,51 +94,9 @@ with open(sys.argv[1]) as in_file:
                     objects_list = objects.split(' ')
 
                     for npc_object in objects_list:
-                        if npc_object.endswith('Bruja'):
-                            witch = npc_object.split('-')[0]
-                            witches.add(witch)
-                            positions.add('(at ' + zone + ' ' + witch + ')\n')
-                        elif npc_object.endswith('Princesa'):
-                            princess = npc_object.split('-')[0]
-                            princesses.add(princess)
-                            positions.add('(at ' + zone + ' ' + princess + ')\n')
-                        elif npc_object.endswith('Principe'):
-                            prince = npc_object.split('-')[0]
-                            princes.add(princess)
-                            positions.add('(at ' + zone + ' ' + prince + ')\n')
-                        elif npc_object.endswith('Profesor'):
-                            teacher = npc_object.split('-')[0]
-                            teachers.add(teacher)
-                            positions.add('(at ' + zone + ' ' + teacher + ')\n')
-                        elif npc_object.endswith('Leonardo'):
-                            leo = npc_object.split('-')[0]
-                            leonardos.add(leo)
-                            positions.add('(at ' + zone + ' ' + leo + ')\n')
-                        elif npc_object.endswith('Player'):
-                            player = npc_object.split('-')[0]
-                            players.add(player)
-                            positions.add('(at ' + zone + ' ' + player + ')\n')
-                        elif npc_object.endswith('Oscar'):
-                            oscar = npc_object.split('-')[0]
-                            oscars.add(oscar)
-                            positions.add('(at ' + zone + ' ' + oscar + ')\n')
-                        elif npc_object.endswith('Manzana'):
-                            apple = npc_object.split('-')[0]
-                            apples.add(apple)
-                            positions.add('(at ' + zone + ' ' + apple + ')\n')
-                        elif npc_object.endswith('Algoritmo'):
-                            algorithm = npc_object.split('-')[0]
-                            algorithms.add(algorithm)
-                            positions.add('(at ' + zone + ' ' + algorithm + ')\n')
-                        elif npc_object.endswith('Oro'):
-                            obj_gold = npc_object.split('-')[0]
-                            gold.add(obj_gold)
-                            positions.add('(at ' + zone + ' ' + obj_gold + ')\n')
-                        elif npc_object.endswith('Rosa'):
-                            rose = npc_object.split('-')[0]
-                            roses.add(rose)
-                            positions.add('(at ' + zone + ' ' + rose + ')\n')
-
+                        var, var_class = npc_object.split('-')
+                        npc_obj_dict[var_class].add(var)
+                        positions.add('(at {} {})\n'.format(zone, var))
         # Siguiente linea
         line = in_file.readline()
 
@@ -156,3 +113,4 @@ print(problem)
 print(out_zones)
 print(connections)
 print(sorted(positions))
+print(npc_obj_dict)
