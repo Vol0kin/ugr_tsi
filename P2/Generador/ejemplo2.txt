@@ -1,4 +1,4 @@
-Dominio:Ejercicio1
+Dominio:Ejercicio2
 Problema:Problema1
 numero de zonas:7
 
