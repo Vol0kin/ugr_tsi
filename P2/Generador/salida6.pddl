@@ -1,10 +1,10 @@
 (define (problem Problema1)
-    (:domain Ejercicio3)
+    (:domain Ejercicio6)
     (:objects
         z1 z2 z3 z4 z5 z6 z7 - zone
         bruja1 - Bruja
         princesa1 - Princesa
-        player1 - Player
+        player1 player2 - Player
         oscar1 - Oscar
         manzana1 - Manzana
     )
@@ -46,10 +46,16 @@
         (at manzana1 z4)
         (at oscar1 z5)
         (at player1 z2)
+        (at player2 z6)
         (at princesa1 z7)
         (emptyhand player1)
         (oriented player1 S)
         (emptybag player1)
+        (= (player-score player1) 0)
+        (emptyhand player2)
+        (oriented player2 S)
+        (emptybag player2)
+        (= (player-score player2) 0)
         (= (received princesa1) 0)
         (= (received bruja1) 0)
         (= (score princesa1 oscar1) 5)
@@ -63,6 +69,8 @@
     (:goal
         (AND
             (>= (total_score) 50)
+            (>= (player-score player1) 20)
+            (>= (player-score player2) 20)
         )
     )
 )

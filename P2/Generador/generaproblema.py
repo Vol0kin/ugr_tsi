@@ -21,6 +21,8 @@ npc_obj_dict['Principe'] = set()
 npc_obj_dict['Princesa'] = set()
 npc_obj_dict['Profesor'] = set()
 npc_obj_dict['Player'] = set()
+npc_obj_dict['Dealer'] = set()
+npc_obj_dict['Picker'] = set()
 npc_obj_dict['Oscar'] = set()
 npc_obj_dict['Manzana'] = set()
 npc_obj_dict['Algoritmo'] = set()
@@ -31,11 +33,18 @@ npc_obj_dict['Zapatilla'] = set()
 
 
 # Claves de los jugadores
-player_keys = ['Player']
+player_keys = ['Player', 'Picker', 'Dealer']
+
+# Claves de los NPC
 npc_keys = ['Leonardo', 'Princesa', 'Bruja', 'Profesor', 'Principe']
+
+# Claves de los objetos que se pueden entregar
 item_keys = ['Oscar', 'Rosa', 'Manzana', 'Algoritmo', 'Oro']
+
+# Puntos por item
 points = [5, 4, 3, 1, 10]
 
+# Diccionario de puntos
 points_dict = {(npc, item): score for item in item_keys for npc, score in zip(npc_keys, rotate_points(points))}
 
 # Declarar listas y sets que contendran informacion de salida
@@ -43,22 +52,12 @@ zones = []
 connections = []
 positions = set()
 pockets = []
+player_points = []
 
 # Crear strings que se escribiran
 out_zones = ''
 domain = ''
 problem = ''
-out_apples = ''
-out_algorithms = ''
-out_gold = ''
-out_oscars = ''
-out_roses = ''
-out_leonardos = ''
-out_princesses = ''
-out_princes = ''
-out_witches = ''
-out_teachers = ''
-out_players = ''
 out_goal_points = ''
 
 tab_increment = 4
@@ -67,6 +66,9 @@ tab_increment = 4
 use_bag = False
 use_total_points = False
 use_npc_scores = False
+use_player_points = False
+
+print('Parsing input file...')
 
 with open(sys.argv[1]) as in_file:
 
@@ -88,7 +90,7 @@ with open(sys.argv[1]) as in_file:
 
             if num_domain >= 3:
                 use_bag = True
-        elif line.startswith('numero'):
+        elif line.startswith('numero de zonas'):
             # Extraer el numero de zonas
             num_zones = int(line.split(':')[1])
 
@@ -121,6 +123,24 @@ with open(sys.argv[1]) as in_file:
             for pocket in pockets_npc:
                 pocket_info = pocket.split(':')
                 pockets.append('(= (pocket-capacity {}) {})\n'.format(pocket_info[0], pocket_info[1]))
+        elif line.startswith('puntos_jugador'):
+            use_player_points = True
+
+            # Obtener puntos para los jugadores
+            plyr_points = re.findall(r'\[.*\]', line)
+
+            # Eliminar corchetes
+            plyr_points = re.sub(r'[\[\]]', '', plyr_points[0])
+
+            # Separar puntos
+            plyr_points = plyr_points.split(' ')
+
+            for plyr in plyr_points:
+                points_info = plyr.split(':')
+                player_points.append('(>= (player-score {}) {})\n'.format(points_info[0], points_info[1]))
+        elif line.startswith('numero de jugadores'):
+            line = in_file.readline()
+            continue
         elif not line == '\n':
             order, zone_list = line.split(' -> ')
 
@@ -191,6 +211,10 @@ with open(sys.argv[1]) as in_file:
         # Siguiente linea
         line = in_file.readline()
 
+
+print('Parsing complete!')
+print('Generating output file...')
+
 with open(sys.argv[2], 'w') as out_file:
     tab_size = tab_increment
 
@@ -237,6 +261,8 @@ with open(sys.argv[2], 'w') as out_file:
 
                 if use_bag:
                     out_file.write('\t'.expandtabs(tab_size) + '(emptybag {})\n'.format(player))
+                if use_player_points and not key == 'Picker':
+                    out_file.write('\t'.expandtabs(tab_size) + '(= (player-score {}) 0)\n'.format(player))
 
     # Escribir objetos recibidos de cada personaje
     for key in npc_keys:
@@ -248,7 +274,6 @@ with open(sys.argv[2], 'w') as out_file:
 
     # Si se usan puntos, insertar puntos por cada objeto
     if use_npc_scores:
-        print('Se van a usar')
         for key_npc in npc_keys:
             npc_vars = npc_obj_dict[key_npc]
 
@@ -283,6 +308,10 @@ with open(sys.argv[2], 'w') as out_file:
         tab_size += tab_increment
         out_file.write('\t'.expandtabs(tab_size) + out_goal_points)
 
+        # Escribir puntos de jugadores (si los hay)
+        for plyr_score in player_points:
+            out_file.write('\t'.expandtabs(tab_size) + plyr_score)
+
         tab_size -= tab_increment
         out_file.write('\t'.expandtabs(tab_size) + ')\n')
 
@@ -292,12 +321,4 @@ with open(sys.argv[2], 'w') as out_file:
 
     out_file.write(')')
 
-
-print(domain)
-print(problem)
-print(out_zones)
-print(connections)
-print(sorted(positions))
-print(npc_obj_dict)
-print(points_dict)
-print(out_goal_points)
+print('Output file generated successfully!')
