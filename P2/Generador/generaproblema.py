@@ -38,10 +38,11 @@ points = [5, 4, 3, 1, 10]
 
 points_dict = {(npc, item): score for item in item_keys for npc, score in zip(npc_keys, rotate_points(points))}
 
-# Declarar conjuntos que contendran las zonas
+# Declarar listas y sets que contendran informacion de salida
 zones = []
 connections = []
 positions = set()
+pockets = []
 
 # Crear strings que se escribiran
 out_zones = ''
@@ -58,11 +59,14 @@ out_princes = ''
 out_witches = ''
 out_teachers = ''
 out_players = ''
+out_goal_points = ''
 
 tab_increment = 4
 
 # Variables booleanas
 use_bag = False
+use_total_points = False
+use_npc_scores = False
 
 with open(sys.argv[1]) as in_file:
 
@@ -96,6 +100,27 @@ with open(sys.argv[1]) as in_file:
                 out_zones += zone + ' '
 
             out_zones += '- zone\n'
+        elif line.startswith('puntos_totales'):
+            # Establecer que se usaran puntos totales
+            use_total_points = True
+            use_npc_scores = True
+            
+            # Obtener numero de puntos y generar salida de puntos
+            num_points = line.split(':')[1].replace('\n', '')
+            out_goal_points = '(>= (total_score) {})\n'.format(num_points)
+        elif line.startswith('bolsillo'):
+            # Obtener los bolsillos
+            pockets_npc = re.findall(r'\[.*\]', line)
+
+            # Eliminar corchetes
+            pockets_npc = re.sub(r'[\[\]]', '', pockets_npc[0])
+
+            # Separar los bolsillos
+            pockets_npc = pockets_npc.split(' ')
+
+            for pocket in pockets_npc:
+                pocket_info = pocket.split(':')
+                pockets.append('(= (pocket-capacity {}) {})\n'.format(pocket_info[0], pocket_info[1]))
         elif not line == '\n':
             order, zone_list = line.split(' -> ')
 
@@ -218,12 +243,52 @@ with open(sys.argv[2], 'w') as out_file:
         npcs = npc_obj_dict[key]
 
         if len(npcs) > 0:
-            for npc in npcs:
+            for npc in sorted(npcs):
                 out_file.write('\t'.expandtabs(tab_size) + '(= (received {}) 0)\n'.format(npc))
+
+    # Si se usan puntos, insertar puntos por cada objeto
+    if use_npc_scores:
+        print('Se van a usar')
+        for key_npc in npc_keys:
+            npc_vars = npc_obj_dict[key_npc]
+
+            for var in npc_vars:
+                for key_obj in item_keys:
+                    items = npc_obj_dict[key_obj]
+                    for item in items:
+                        obj_score = points_dict[(key_npc, key_obj)]
+
+                        out_file.write('\t'.expandtabs(tab_size) + '(= (score {} {}) {})\n'.format(var, item, obj_score))
+
+    # Si se usan puntos, escribir los puntos iniciales
+    if use_total_points:
+        out_file.write('\t'.expandtabs(tab_size) + '(= (total_score) 0)\n')
+
+    # Escribir los bolsillos (si se usan)
+    if len(pockets) > 0:
+        for pocket in pockets:
+            out_file.write('\t'.expandtabs(tab_size) + pocket)
 
     # Restaurar desplazamiento del tabulado y cerrar hechos iniciales
     tab_size -= tab_increment
     out_file.write('\t'.expandtabs(tab_size) + ')\n')
+
+    # Insertar goal (si se usa)
+    if use_total_points:
+        out_file.write('\t'.expandtabs(tab_size) + '(:goal\n')
+
+        tab_size += tab_increment
+        out_file.write('\t'.expandtabs(tab_size) + '(AND\n')
+
+        tab_size += tab_increment
+        out_file.write('\t'.expandtabs(tab_size) + out_goal_points)
+
+        tab_size -= tab_increment
+        out_file.write('\t'.expandtabs(tab_size) + ')\n')
+
+        tab_size -= tab_increment
+        out_file.write('\t'.expandtabs(tab_size) + ')\n')
+
 
     out_file.write(')')
 
@@ -235,3 +300,4 @@ print(connections)
 print(sorted(positions))
 print(npc_obj_dict)
 print(points_dict)
+print(out_goal_points)

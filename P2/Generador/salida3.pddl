@@ -7,6 +7,7 @@
         player1 - Player
         oscar1 - Oscar
         manzana1 - Manzana
+        bikini1 - Bikini
     )
     (:init
         (connected z1 S z3)
@@ -42,6 +43,7 @@
         (terrain z5 Bosque)
         (terrain z6 Bosque)
         (terrain z7 Agua)
+        (at bikini1 z3)
         (at bruja1 z1)
         (at manzana1 z4)
         (at oscar1 z5)
@@ -50,7 +52,7 @@
         (emptyhand player1)
         (oriented player1 S)
         (emptybag player1)
-        (= (received bruja1) 0)
         (= (received princesa1) 0)
+        (= (received bruja1) 0)
     )
 )
