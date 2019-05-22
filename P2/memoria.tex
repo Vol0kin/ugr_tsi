@@ -190,13 +190,16 @@ En este apartado se han planteado 2 problemas. El primero es un problema con 25 
 cada zona está conectada con sus zonas adyacentes. Se han situado 5 personajes en el mapa (uno de cada clase) y 5 objetos (uno de cada
 tipo), de tal forma que estuviesen más o menos dispersos de igual forma. Se ha situado al jugador en el centro del mapa y orientado
 hacia el sur (como en todos los problemas, ya que no se especifica nunca que el jugador tenga una determinada orientación inicial).
+Se han incializado el número de objetos que ha recibido cada personaje a 0 y se ha especificado que el jugador tiene la mano vacía.
 El objetivo era que cada personaje tuviese al menos un objeto. Para representar este objetivo sin decir explícitamente qué jugador
 debe tener qué objeto, aquí ha venido muy bien el contador \textbf{received} del que se habló anteriormente, ya que simplemente
 bastaba con indicar que cada personaje tenía que recibir una cantidad de objetos mayor o igual que 1. Con esto, se han creado 2
 planes: uno sin optimizar y uno optimizando. El resultado que se ha obtenido es que las dos planificaciones han obtenido el mismo
 plan, con lo cuál en este caso, la optimización no ha sido un factor muy importante.
 
-Se ha planteado un segundo problema con 12 zonas y de nuevo 5 objetos y 5 personajes, cada uno de una clase. El objetivo ha sido, de
+Se ha planteado un segundo problema con 12 zonas y de nuevo 5 objetos y 5 personajes, cada uno de una clase. 
+Se han incializado el número de objetos que ha recibido cada personaje a 0 y se ha especificado que el jugador tiene la mano vacía.
+El objetivo ha sido, de
 nuevo, que cada personaje tuviese un objeto, pero además de eso, que el jugador estuviese en la zona 3 y orientado al norte. En este
 caso se han obtenido de nuevo dos planes: uno sin optimización y uno optimizando. En este caso, el plan sin optimización es más largo
 que el que se ha obtenido optimizando con \textit{BFS}, con lo cuál aquí si que influye la optimización, posiblemente debido a las
@@ -231,7 +234,8 @@ valor de \textbf{traveled} de dicho jugador con el valor de \textbf{distance} co
 \subsection{Ejercicio 2.b}
 
 En este apartado se han planteado de nuevo dos problemas. El primero de ellos tiene exactamente la misma descripción que el problema
-de las 25 zonas del ejercicio anterior, solo que se han añadido costes entre las zonas. El plan que se obtuvo del planificador sin
+de las 25 zonas del ejercicio anterior, solo que se han añadido costes entre las zonas y se inicializació la distancia recorrida
+por el jugador a 0. El plan que se obtuvo del planificador sin ningún tipo de optimización
 era el más largo, pero a la vez también el más rápido, ya que no buscaba minimizar la distancia total viajada. Se ha probado también a
 obtener un plan con optimización por \textit{BFS} y por búsqueda con $g = 1$ y $h = 1$. Los resultados es que en el primer caso se
 obtuvo un plan más corto que el original con un coste de 46. En el segundo caso se obtuvo un plan aún más corto que el caso anterior
@@ -240,7 +244,8 @@ la que más tarda en obtener un resultado, pero que siempre obtiene el camino de
 heurística es importante, ya que en el primer caso hace más una búsqueda heurística mientras que en el segundo caso hace una búsqueda
 más equilibrada.
 
-El segundo problema sigue la misma descripción que el problema de las 12 zonas del ejercicio anterior, solo que se han añadido costes.
+El segundo problema sigue la misma descripción que el problema de las 12 zonas del ejercicio anterior, solo que se han añadido costes
+y se ha indicado que la distancia total recorrida inicialmente es 0.
 El plan que se ha obtenido sin optimizar es el más corto, pero no tiene en cuenta las distancias. El que se ha obtenido por
 \textit{BFS} es una acción más largo que el anterior, pero obtiene el camino óptimo (a diferencia del caso anterior). La búsqueda
 equilibrada obtiene un plan con el mismo coste pero con 2 acciones más que el anterior, además de que tarda más tiempo en obtenerlo.
@@ -324,15 +329,15 @@ y coger otro cuando el personaje tiene la mochila vacía.
 
 De nuevo se han probado dos problemas. El primero es el problema de las 25 zonas del ejercicio anterior, añadiendo ahora
 superfícies que obliguen al jugador a plantearse si necesita coger un objeto que le permita desplazarse, además de un bikini y una
-zapatilla, los cuáles se usarán para desplazarse. El planificador encontró un plan en muy poco tiempo sin dar ningún item que no
-tocaba a ningún personaje. Se ha intentado optimizar el problema, pero debido al tamaño de este se obtenía una violación de segmento,
-con lo cuál a partir de aquí se dejará de intentar optimizar este problema.
+zapatilla, los cuáles se usarán para desplazarse, y se ha indicado que el jugador tiene la mochila vacía. El planificador encontró un
+plan en muy poco tiempo sin dar ningún item que no tocaba a ningún personaje. Se ha intentado optimizar el problema, pero debido al
+tamaño de este se obtenía una violación de segmento, con lo cuál a partir de aquí se dejará de intentar optimizar este problema.
 
 El segundo problema es una modificación del de 12 zonas de antes añadiendo una nueva zona que es un precipicio. Como en el caso
-anterior, se han añadido superfícies y los nuevos objetos. El planificador encontró un plan tanto sin optimizar como con los dos
-tipos de optimizaciones en un tiempo muy pequeño. Pero, a medida que se iba optimizando la distancia recorrida, el tamaño del plan
-iba aumentando. De hecho, entre los dos planes optimizados, a pesar de tener el mismo coste, hay más acciones en el plan con la
-heurística equilibrada que con la de \textit{BFS}.
+anterior, se han añadido superfícies, los nuevos objetos y la mochila vacía. El planificador encontró un plan tanto sin optimizar como
+con los dos tipos de optimizaciones en un tiempo muy pequeño. Pero, a medida que se iba optimizando la distancia recorrida, el tamaño
+del plan iba aumentando. De hecho, entre los dos planes optimizados, a pesar de tener el mismo coste, hay más acciones en el plan con
+la heurística equilibrada que con la de \textit{BFS}.
 
 \section{Ejercicio 4}
 
@@ -379,18 +384,24 @@ que la función \textbf{(total\_score)} se ha incrementado en la cantidad de pun
 \subsection{Ejercicio 4.b}
 
 En este apartado se han probado tres problemas. El primero es una modificación del problema de 25 zonas, dejando las mismas zonas
-y personajes pero cambiando los objetos para que sean solo manzanas y oscars, y especificando que se tienen que conseguir 80 puntos
-mínimo. El planificador es capaz de encontrar un plan muy rápidamente en el que en total consigue 84 puntos.
+y personajes pero cambiando los objetos para que sean solo manzanas y oscars.
+También se han generado todos los puntos que ortorga cada uno de los personajes por cada objeto.
+El objetivo era conseguir 80 puntos como mínimo. 
+El planificador es capaz de encontrar un plan muy rápidamente en el que en total consigue 84 puntos.
 
 El segundo es una modificación del problema de las 13 zonas, dejando las zonas tal y como estaban y cambiando todos los objetos por
-oscars y manzanas y añadiendo más objetos de estos tipos. Se especificaba que se consiguiesen 50 puntos mínimo, y se consiguieron
+oscars y manzanas y añadiendo más objetos de estos tipos.
+También se han generado todos los puntos que ortorga cada uno de los personajes por cada objeto.
+Se especificaba que se consiguiesen 50 puntos mínimo, y se consiguieron
 exactamente 50 puntos. Además, se probó a optimizar el plan con una búsqueda equilibrada, y se consiguió un plan con la misma
 longitud. Sin embargo, el tiempo que se ha necesitado para obtener el plan, a pesar de que el problema no era muy grande, fue de poco
 más de 2 minutos. Con lo cuál, a partir de ahora no se probará a optimizar ningún problema de nuevo, ya que los tiempos de ejecución
 se han visto incrementados demasiado.
 
 El tercero es una extensión del problema de 25 zonas, solo que esta vez conservando los mismos objetos, personajes y zonas de antes
-y añadiendo objetos nuevos de distintas clases. Se ha especificado que se obtuviesen 80 puntos, y el planificador encontró un plan
+y añadiendo objetos nuevos de distintas clases.
+También se han generado todos los puntos que ortorga cada uno de los personajes por cada objeto.
+Se ha especificado que se obtuviesen 80 puntos, y el planificador encontró un plan
 en el que se entregaban todos los objetos y el jugador conseguía 82 puntos en total, consiguiendo por tanto el objetivo propuesto.
 
 \section{Ejercicio 5}
@@ -487,12 +498,14 @@ puntos del jugador que le ha entregado el objeto, los puntos que se reciben por 
 
 Pasando ahora a hablar de los problemas, el primero de ellos es una modificación del problema de las 25 zonas del ejercicio anterior,
 solo que ahora con 2 jugadores y cada uno de ellos tiene que obtener un mínimo de 20 puntos, consiguiendo en total entre los dos
-60 puntos. El planificador fue capaz de encontrar un plan en el que ambos consiguiesen la cantidad mínima de puntos, aun teniendo
+60 puntos. También se ha especificado que los puntos que tienen inicialmente los jugadores son 0.
+El planificador fue capaz de encontrar un plan en el que ambos consiguiesen la cantidad mínima de puntos, aun teniendo
 que pasar por ejemplo por un bosque. Sin embargo, la cantidad individual de puntos que conseguía cada uno no estaba equilibrado (había
 un jugador que conseguía más puntos que el otro).
 
 El segundo y tercer problema son una modificación del problema de las 13 zonas con solo manzanas y oscars. Todos los personajes tienen
 bolsillos de capacidad mayor o igual a 1, y en los dos problemas los dos jugadores tienen que obtener un mínimo de 10 puntos cada uno.
+También se ha especificado que los puntos que tienen inicialmente los jugadores son 0.
 En uno de los problemas se tienen que obtener 20 puntos en total, mientras que en el otro 30. El planificador es capaz de encontrar
 en ambos casos planes para resolver los problemas, resolviéndolos satisfactoriamente y consiguiendo las cantidades necesarias de
 puntos.
@@ -532,17 +545,19 @@ deja de tener la mano vacía.
 De nuevo, como se ha realizado anteriormente, se han probado tres problemas. El primero es una modificación del problema de las 25
 zonas del apartado anterior, cambiando los tipos de los jugadores para que uno haga el papel de \textit{Picker} y el otro el papel
 de \textit{Dealer}. También se ha especificado que el \textit{Dealer}, como mínimo, tiene que conseguir como mínimo 20 puntos y
-un mínimo de 60 puntos en total (tendrá que hacer todo el tabajo en este caso al no tener otro \textit{Dealer}). El planificador
-fue capaz de encontrar un plan, tardando sin embargo aproximadamente 18 segundos en encontrarlo.
+un mínimo de 60 puntos en total (tendrá que hacer todo el tabajo en este caso al no tener otro \textit{Dealer}). 
+También se ha especificado que los puntos que tiene inicialmente el \textit{Dealer} son 0 puntos.
+El planificador fue capaz de encontrar un plan, tardando sin embargo aproximadamente 18 segundos en encontrarlo.
 
 El segundo y el tercer problema son una modficiación del problema de las 13 zonas del ejercicio anterior. En el primero de ellos
 hay de nuevo un \textit{Picker} y un \textit{Dealer}, y el \textit{Dealer} tiene que conseguir un mínimo de 10 puntos, y en total
 se tienen que conseguir 20 puntos (de nuevo tiene que hacer todo el trabajo). En cambio, en el otro problema hay un \textit{Picker}
 y dos jugadores de tipo \textit{Dealer}, y cada uno de ellos tiene que conseguir un mínimo de 10 puntos, llegando entre los dos a 30
-en total. En ambos casos, el planificador consiguió encontrar un plan que satisfaciese las restricciones, demostrando que funciona
+en total. En los dos problemas se especificó que la cantidad de puntos que tenían los \textit{Dealer} inicialmente era 0.
+En ambos casos, el planificador consiguió encontrar un plan que satisfaciese las restricciones, demostrando que funciona
 incluso para más de un \textit{Dealer}. Sin embargo, en el segundo caso tardó poco más de 1 minuto en obtener el plan, con lo cuál,
-parece que aún para un problema simple, si se empiezan a meter demasiados elementos, el planificador tiene problemas para encontrar
-planes buenos en un tiempo pequeño.
+parece que aún para un problema simple, si se empiezan a tener demasiados elementos en el problema el planificador tiene problemas
+para encontrar planes que cumplan los objetivos en un tiempo pequeño.
 
 \end{document}
 
