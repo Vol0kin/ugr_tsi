@@ -17,7 +17,7 @@
   			   (given ?obj - items)
            (terrain ?z - zone ?s - surface)
            (emptybag ?p - Player)
-           (inbag ?o - Object ?p - Player)
+           (inbag ?o - items ?p - Player)
            (is_zapatilla ?o - items)
            (is_bikini ?o - items)
            (has-pocket ?n - npc)
