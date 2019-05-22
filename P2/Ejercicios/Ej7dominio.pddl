@@ -20,6 +20,7 @@
            (inbag ?o - Object ?p - Player)
            (is_zapatilla ?o - items)
            (is_bikini ?o - items)
+           (has-pocket ?n - npc)
   )
   (:functions
   	(received ?n - npc)
@@ -92,9 +93,22 @@
     )
 
   )
+  (:action give-item-npc-pocket
+  	:parameters (?d - Dealer ?n - npc ?o - items ?z - zone)
+  	:precondition (and (taken ?o ?d) (at ?d ?z) (at ?n ?z) (not (is_zapatilla ?o)) (not (is_bikini ?o)) (has-pocket ?n) (> (pocket-capacity ?n) (received ?n)))
+  	:effect (and
+  		(not (taken ?o ?d))
+  		(emptyhand ?d)
+  		(at ?o ?z)
+  		(given ?o)
+  		(increase (received ?n) 1)
+      (increase (total_score) (score ?n ?o))
+      (increase (player-score ?d) (score ?n ?o))
+  	)
+  )
   (:action give-item-npc
   	:parameters (?d - Dealer ?n - npc ?o - items ?z - zone)
-  	:precondition (and (taken ?o ?d) (at ?d ?z) (at ?n ?z) (not (is_zapatilla ?o)) (> (pocket-capacity ?n) (received ?n)))
+  	:precondition (and (taken ?o ?d) (at ?d ?z) (at ?n ?z) (not (is_zapatilla ?o)) (not (is_bikini ?o)) (not (has-pocket ?n)))
   	:effect (and
   		(not (taken ?o ?d))
   		(emptyhand ?d)

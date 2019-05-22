@@ -41,6 +41,9 @@ npc_keys = ['Leonardo', 'Princesa', 'Bruja', 'Profesor', 'Principe']
 # Claves de los objetos que se pueden entregar
 item_keys = ['Oscar', 'Rosa', 'Manzana', 'Algoritmo', 'Oro']
 
+# Claves de los objetos que se usan para mover
+utils_keys = ['Bikini', 'Zapatilla']
+
 # Puntos por item
 points = [5, 4, 3, 1, 10]
 
@@ -53,6 +56,7 @@ connections = []
 positions = set()
 pockets = []
 player_points = []
+npc_pockets = []
 
 # Crear strings que se escribiran
 out_zones = ''
@@ -67,6 +71,7 @@ use_bag = False
 use_total_points = False
 use_npc_scores = False
 use_player_points = False
+player_distances = False
 
 print('Parsing input file...')
 
@@ -123,6 +128,7 @@ with open(sys.argv[1]) as in_file:
             for pocket in pockets_npc:
                 pocket_info = pocket.split(':')
                 pockets.append('(= (pocket-capacity {}) {})\n'.format(pocket_info[0], pocket_info[1]))
+                npc_pockets.append(pocket_info[0])
         elif line.startswith('puntos_jugador'):
             use_player_points = True
 
@@ -150,6 +156,8 @@ with open(sys.argv[1]) as in_file:
 
             # Obtener las distancias de cada zona
             costs = re.findall(r'=[0-9]*=', zone_list)
+            if len(costs) > 0:
+                player_distances = True
 
             # Eliminar parentesis de los objetos
             formated_objects = [re.sub(r'[\[\]]', '', objects) for objects in line_objects]
@@ -263,6 +271,8 @@ with open(sys.argv[2], 'w') as out_file:
                     out_file.write('\t'.expandtabs(tab_size) + '(emptybag {})\n'.format(player))
                 if use_player_points and not key == 'Picker':
                     out_file.write('\t'.expandtabs(tab_size) + '(= (player-score {}) 0)\n'.format(player))
+                if player_distances:
+                    out_file.write('\t'.expandtabs(tab_size) + '(= (traveled {}) 0)\n'.format(player))
 
     # Escribir objetos recibidos de cada personaje
     for key in npc_keys:
@@ -271,6 +281,18 @@ with open(sys.argv[2], 'w') as out_file:
         if len(npcs) > 0:
             for npc in sorted(npcs):
                 out_file.write('\t'.expandtabs(tab_size) + '(= (received {}) 0)\n'.format(npc))
+
+    # Escribir tipos de objetos utiles, si se usan
+    for key in utils_keys:
+        utils = npc_obj_dict[key]
+
+        if key == 'Zapatilla':
+            util_type = 'is_zapatilla'
+        else:
+            util_type = 'is_bikini'
+
+        for util in utils:
+            out_file.write('\t'.expandtabs(tab_size) + '({} {})\n'.format(util_type, util))
 
     # Si se usan puntos, insertar puntos por cada objeto
     if use_npc_scores:
@@ -293,6 +315,9 @@ with open(sys.argv[2], 'w') as out_file:
     if len(pockets) > 0:
         for pocket in pockets:
             out_file.write('\t'.expandtabs(tab_size) + pocket)
+
+        for pocket in npc_pockets:
+            out_file.write('\t'.expandtabs(tab_size) + '(has-pocket {})\n'.format(pocket))
 
     # Restaurar desplazamiento del tabulado y cerrar hechos iniciales
     tab_size -= tab_increment

@@ -146,6 +146,11 @@
 		(= (pocket-capacity witch1) 1)
 		(= (pocket-capacity princess1) 1)
 		(= (pocket-capacity prince1) 1)
+		(has-pocket teacher1)
+		(has-pocket leo1)
+		(has-pocket witch1)
+		(has-pocket princess1)
+		(has-pocket prince1)
 	)
 	(:goal (AND
 		(>= (total_score) 20)

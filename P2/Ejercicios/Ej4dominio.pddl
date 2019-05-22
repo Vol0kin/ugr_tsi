@@ -81,7 +81,7 @@
   )
   (:action give-item
   	:parameters (?p - Player ?n - npc ?o - items ?z - zone)
-  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z) (not (is_zapatilla ?o)))
+  	:precondition (and (taken ?o ?p) (at ?p ?z) (at ?n ?z) (not (is_zapatilla ?o)) (not (is_bikini ?o)))
   	:effect (and
   		(not (taken ?o ?p))
   		(emptyhand ?p)

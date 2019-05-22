@@ -1,0 +1,128 @@
+
+ff: parsing domain file
+domain 'EJERCICIO2' defined
+ ... done.
+ff: parsing problem file
+problem 'PROBLEMA1' defined
+ ... done.
+
+
+
+no optimization required. skipping criterion.
+
+
+no metric specified. plan length assumed.
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:   22 into depth [1]
+                                  17            [1][2][3][4]
+                                  16            [1][2][3][4][5][6][7]
+                                  15            [1][2][3][4][5]
+                                  14            [1][2][3][4][5]
+                                  13            [1][2]
+                                  12            [1][2][3][4][5]
+                                  11            [1][2][3][4][5][6][7][8]
+                                   9            [1]
+                                   8            [1]
+                                   7            [1][2][3][4][5][6]
+                                   6            [1][2][3][4][5][6][7][8][9][10][11]
+                                   5            [1]
+                                   4            [1][2][3][4][5][6][7][8][9][10][11][12]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: MOVE PLAYER1 Z13 Z18 S
+        1: TURN-RIGHT PLAYER1
+        2: MOVE PLAYER1 Z18 Z17 W
+        3: MOVE PLAYER1 Z17 Z16 W
+        4: TURN-RIGHT PLAYER1
+        5: TURN-RIGHT PLAYER1
+        6: MOVE PLAYER1 Z16 Z17 E
+        7: TURN-RIGHT PLAYER1
+        8: MOVE PLAYER1 Z17 Z22 S
+        9: TURN-LEFT PLAYER1
+       10: TURN-LEFT PLAYER1
+       11: PICK-UP-ITEM PLAYER1 ROSA1 Z22
+       12: MOVE PLAYER1 Z22 Z17 N
+       13: MOVE PLAYER1 Z17 Z12 N
+       14: MOVE PLAYER1 Z12 Z7 N
+       15: MOVE PLAYER1 Z7 Z2 N
+       16: TURN-LEFT PLAYER1
+       17: MOVE PLAYER1 Z2 Z19 W
+       18: GIVE-ITEM PLAYER1 LEONARDO1 ROSA1 Z19
+       19: MOVE PLAYER1 Z19 Z18 W
+       20: PICK-UP-ITEM PLAYER1 ALGORITMO1 Z18
+       21: MOVE PLAYER1 Z18 Z17 W
+       22: MOVE PLAYER1 Z17 Z16 W
+       23: TURN-RIGHT PLAYER1
+       24: TURN-RIGHT PLAYER1
+       25: TURN-RIGHT PLAYER1
+       26: MOVE PLAYER1 Z16 Z21 S
+       27: TURN-RIGHT PLAYER1
+       28: TURN-RIGHT PLAYER1
+       29: TURN-RIGHT PLAYER1
+       30: MOVE PLAYER1 Z21 Z22 E
+       31: MOVE PLAYER1 Z22 Z23 E
+       32: GIVE-ITEM PLAYER1 PRINCIPE1 ALGORITMO1 Z23
+       33: TURN-RIGHT PLAYER1
+       34: TURN-RIGHT PLAYER1
+       35: MOVE PLAYER1 Z23 Z22 W
+       36: MOVE PLAYER1 Z22 Z21 W
+       37: TURN-RIGHT PLAYER1
+       38: MOVE PLAYER1 Z21 Z16 N
+       39: MOVE PLAYER1 Z16 Z11 N
+       40: MOVE PLAYER1 Z11 Z6 N
+       41: MOVE PLAYER1 Z6 Z1 N
+       42: TURN-LEFT PLAYER1
+       43: PICK-UP-ITEM PLAYER1 OSCAR1 Z1
+       44: TURN-LEFT PLAYER1
+       45: GIVE-ITEM PLAYER1 PRINCESA1 OSCAR1 Z1
+       46: MOVE PLAYER1 Z1 Z15 S
+       47: MOVE PLAYER1 Z15 Z2 S
+       48: MOVE PLAYER1 Z2 Z25 S
+       49: TURN-RIGHT PLAYER1
+       50: TURN-RIGHT PLAYER1
+       51: PICK-UP-ITEM PLAYER1 MANZANA1 Z25
+       52: MOVE PLAYER1 Z25 Z2 N
+       53: TURN-LEFT PLAYER1
+       54: MOVE PLAYER1 Z2 Z1 W
+       55: TURN-LEFT PLAYER1
+       56: MOVE PLAYER1 Z1 Z6 S
+       57: GIVE-ITEM PLAYER1 BRUJA1 MANZANA1 Z6
+       58: TURN-RIGHT PLAYER1
+       59: TURN-RIGHT PLAYER1
+       60: MOVE PLAYER1 Z6 Z1 N
+       61: MOVE PLAYER1 Z1 Z5 N
+       62: TURN-LEFT PLAYER1
+       63: MOVE PLAYER1 Z5 Z4 W
+       64: PICK-UP-ITEM PLAYER1 ORO1 Z4
+       65: MOVE PLAYER1 Z4 Z3 W
+       66: MOVE PLAYER1 Z3 Z2 W
+       67: MOVE PLAYER1 Z2 Z19 W
+       68: MOVE PLAYER1 Z19 Z18 W
+       69: MOVE PLAYER1 Z18 Z17 W
+       70: MOVE PLAYER1 Z17 Z16 W
+       71: GIVE-ITEM PLAYER1 PROFESOR1 ORO1 Z16
+     		Coste Total: 0.00
+
+
+time spent:    0.00 seconds instantiating 957 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 163 facts and 335 actions
+               0.00 seconds creating final representation with 158 relevant facts, 11 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.02 seconds searching, evaluating 1984 states, to a max depth of 12
+               0.02 seconds total time
+

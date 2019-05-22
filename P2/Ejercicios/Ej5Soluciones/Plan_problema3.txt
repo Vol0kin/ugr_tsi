@@ -36,7 +36,7 @@ step    0: MOVE PLAYER1 Z8 Z10 S BIKINI1
         1: TURN-RIGHT PLAYER1
         2: MOVE PLAYER1 Z10 Z9 W BIKINI1
         3: PICK-UP-ITEM PLAYER1 APPLE3 Z9
-        4: GIVE-ITEM PLAYER1 WITCH1 APPLE3 Z9
+        4: GIVE-ITEM-POCKET PLAYER1 WITCH1 APPLE3 Z9
         5: TURN-RIGHT PLAYER1
         6: PICK-UP-ITEM PLAYER1 SHOE1 Z9
         7: PUT-IN-BAG PLAYER1 SHOE1
@@ -45,7 +45,7 @@ step    0: MOVE PLAYER1 Z8 Z10 S BIKINI1
        10: PICK-UP-ITEM PLAYER1 APPLE1 Z10
        11: MOVE PLAYER1 Z10 Z11 E SHOE1
        12: MOVE PLAYER1 Z11 Z12 E BIKINI1
-       13: GIVE-ITEM PLAYER1 TEACHER1 APPLE1 Z12
+       13: GIVE-ITEM-POCKET PLAYER1 TEACHER1 APPLE1 Z12
        14: TURN-LEFT PLAYER1
        15: TURN-LEFT PLAYER1
        16: MOVE PLAYER1 Z12 Z11 W SHOE1
@@ -58,15 +58,15 @@ step    0: MOVE PLAYER1 Z8 Z10 S BIKINI1
        23: MOVE PLAYER1 Z5 Z4 W BIKINI1
        24: TURN-LEFT PLAYER1
        25: MOVE PLAYER1 Z4 Z7 S BIKINI1
-       26: GIVE-ITEM PLAYER1 PRINCESS1 OSCAR3 Z7
+       26: GIVE-ITEM-POCKET PLAYER1 PRINCESS1 OSCAR3 Z7
      		Coste Total: 0.00
 
 
-time spent:    0.01 seconds instantiating 681 easy, 192 hard action templates
-               0.00 seconds reachability analysis, yielding 151 facts and 415 actions
-               0.00 seconds creating final representation with 145 relevant facts, 12 relevant fluents
-               0.00 seconds computing LNF
+time spent:    0.00 seconds instantiating 616 easy, 138 hard action templates
+               0.00 seconds reachability analysis, yielding 150 facts and 367 actions
+               0.00 seconds creating final representation with 143 relevant facts, 12 relevant fluents
+               0.01 seconds computing LNF
                0.00 seconds building connectivity graph
-               0.03 seconds searching, evaluating 1084 states, to a max depth of 22
-               0.04 seconds total time
+               0.01 seconds searching, evaluating 1084 states, to a max depth of 22
+               0.02 seconds total time
 

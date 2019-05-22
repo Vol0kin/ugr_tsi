@@ -1,0 +1,88 @@
+
+ff: parsing domain file
+domain 'EJERCICIO2' defined
+ ... done.
+ff: parsing problem file
+problem 'PROBLEMA1' defined
+ ... done.
+
+
+metric established (normalized to minimize): ((1.00*[RF5](TRAVELED_PLAYER1)) - () + 0.00)
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is ((1.00*[RF5](TRAVELED_PLAYER1)) - () + 0.00)
+
+ff: found legal plan as follows
+
+step    0: MOVE PLAYER1 Z13 Z18 S
+        1: PICK-UP-ITEM PLAYER1 ALGORITMO1 Z18
+        2: TURN-LEFT PLAYER1
+        3: MOVE PLAYER1 Z18 Z19 E
+        4: TURN-RIGHT PLAYER1
+        5: GIVE-ITEM PLAYER1 LEONARDO1 ALGORITMO1 Z19
+        6: MOVE PLAYER1 Z19 Z24 S
+        7: TURN-RIGHT PLAYER1
+        8: MOVE PLAYER1 Z24 Z23 W
+        9: MOVE PLAYER1 Z23 Z22 W
+       10: TURN-RIGHT PLAYER1
+       11: PICK-UP-ITEM PLAYER1 ROSA1 Z22
+       12: MOVE PLAYER1 Z22 Z17 N
+       13: TURN-LEFT PLAYER1
+       14: MOVE PLAYER1 Z17 Z16 W
+       15: TURN-RIGHT PLAYER1
+       16: GIVE-ITEM PLAYER1 PROFESOR1 ROSA1 Z16
+       17: MOVE PLAYER1 Z16 Z11 N
+       18: MOVE PLAYER1 Z11 Z6 N
+       19: MOVE PLAYER1 Z6 Z1 N
+       20: PICK-UP-ITEM PLAYER1 OSCAR1 Z1
+       21: GIVE-ITEM PLAYER1 PRINCESA1 OSCAR1 Z1
+       22: TURN-RIGHT PLAYER1
+       23: MOVE PLAYER1 Z1 Z2 E
+       24: TURN-RIGHT PLAYER1
+       25: MOVE PLAYER1 Z2 Z25 S
+       26: PICK-UP-ITEM PLAYER1 MANZANA1 Z25
+       27: TURN-RIGHT PLAYER1
+       28: MOVE PLAYER1 Z25 Z24 W
+       29: MOVE PLAYER1 Z24 Z23 W
+       30: TURN-LEFT PLAYER1
+       31: TURN-LEFT PLAYER1
+       32: GIVE-ITEM PLAYER1 PRINCIPE1 MANZANA1 Z23
+       33: MOVE PLAYER1 Z23 Z24 E
+       34: MOVE PLAYER1 Z24 Z25 E
+       35: TURN-LEFT PLAYER1
+       36: MOVE PLAYER1 Z25 Z2 N
+       37: TURN-LEFT PLAYER1
+       38: MOVE PLAYER1 Z2 Z1 W
+       39: TURN-RIGHT PLAYER1
+       40: MOVE PLAYER1 Z1 Z5 N
+       41: TURN-LEFT PLAYER1
+       42: MOVE PLAYER1 Z5 Z4 W
+       43: TURN-RIGHT PLAYER1
+       44: TURN-RIGHT PLAYER1
+       45: PICK-UP-ITEM PLAYER1 ORO1 Z4
+       46: MOVE PLAYER1 Z4 Z5 E
+       47: TURN-RIGHT PLAYER1
+       48: MOVE PLAYER1 Z5 Z1 S
+       49: MOVE PLAYER1 Z1 Z6 S
+       50: DROP-ITEM PLAYER1 ORO1 Z6
+       51: TURN-LEFT PLAYER1
+       52: TURN-LEFT PLAYER1
+       53: PICK-UP-ITEM PLAYER1 ORO1 Z6
+       54: GIVE-ITEM PLAYER1 BRUJA1 ORO1 Z6
+     		Coste Total: 46.00
+
+
+time spent:    0.00 seconds instantiating 957 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 163 facts and 335 actions
+               0.00 seconds creating final representation with 158 relevant facts, 11 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.80 seconds searching, evaluating 14522 states, to a max depth of 0
+               0.80 seconds total time
+

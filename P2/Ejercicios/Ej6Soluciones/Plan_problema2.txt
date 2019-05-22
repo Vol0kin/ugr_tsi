@@ -38,7 +38,7 @@ step    0: MOVE PLAYER1 Z8 Z10 S BIKINI1
         4: MOVE PLAYER2 Z10 Z9 W BIKINI1
         5: MOVE PLAYER1 Z10 Z9 W BIKINI1
         6: PICK-UP-ITEM PLAYER2 APPLE3 Z9
-        7: GIVE-ITEM PLAYER2 WITCH1 APPLE3 Z9
+        7: GIVE-ITEM-POCKET PLAYER2 WITCH1 APPLE3 Z9
         8: TURN-RIGHT PLAYER1
         9: PUT-IN-BAG PLAYER1 APPLE1
        10: PICK-UP-ITEM PLAYER1 SHOE1 Z9
@@ -48,10 +48,10 @@ step    0: MOVE PLAYER1 Z8 Z10 S BIKINI1
        14: MOVE PLAYER1 Z11 Z12 E BIKINI1
        15: DROP-ITEM PLAYER1 SHOE1 Z12
        16: GET-FROM-BAG PLAYER1 APPLE1
-       17: GIVE-ITEM PLAYER1 TEACHER1 APPLE1 Z12
-       18: PICK-UP-ITEM PLAYER1 SHOE1 Z12
-       19: PUT-IN-BAG PLAYER1 SHOE1
-       20: TURN-LEFT PLAYER1
+       17: GIVE-ITEM-POCKET PLAYER1 TEACHER1 APPLE1 Z12
+       18: TURN-LEFT PLAYER1
+       19: PICK-UP-ITEM PLAYER1 SHOE1 Z12
+       20: PUT-IN-BAG PLAYER1 SHOE1
        21: TURN-LEFT PLAYER1
        22: MOVE PLAYER1 Z12 Z11 W SHOE1
        23: PICK-UP-ITEM PLAYER1 OSCAR3 Z11
@@ -63,15 +63,16 @@ step    0: MOVE PLAYER1 Z8 Z10 S BIKINI1
        29: MOVE PLAYER1 Z5 Z4 W BIKINI1
        30: TURN-LEFT PLAYER1
        31: MOVE PLAYER1 Z4 Z7 S BIKINI1
-       32: GIVE-ITEM PLAYER1 PRINCESS1 OSCAR3 Z7
+       32: GIVE-ITEM-POCKET PLAYER1 PRINCESS1 OSCAR3 Z7
      		Coste Total: 0.00
 
 
-time spent:    0.00 seconds instantiating 1362 easy, 384 hard action templates
-               0.00 seconds reachability analysis, yielding 186 facts and 830 actions
-               0.00 seconds creating final representation with 180 relevant facts, 15 relevant fluents
+time spent:    0.02 seconds instantiating 1232 easy, 276 hard action templates
+               0.00 seconds reachability analysis, yielding 185 facts and 734 actions
+               0.00 seconds creating final representation with 178 relevant facts, 15 relevant fluents
                0.00 seconds computing LNF
                0.00 seconds building connectivity graph
-               1.33 seconds searching, evaluating 34332 states, to a max depth of 25
-               1.33 seconds total time
+               1.42 seconds searching, evaluating 34332 states, to a max depth of 25
+               1.44 seconds total time
+
 
