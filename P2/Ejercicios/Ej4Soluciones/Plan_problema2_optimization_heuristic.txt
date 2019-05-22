@@ -89,11 +89,12 @@ step    0: TURN-LEFT PLAYER1
      		Coste Total: 45.00
 
 
-time spent:    0.01 seconds instantiating 681 easy, 192 hard action templates
-               0.00 seconds reachability analysis, yielding 151 facts and 415 actions
-               0.00 seconds creating final representation with 145 relevant facts, 8 relevant fluents
-               0.00 seconds computing LNF
+time spent:    0.01 seconds instantiating 616 easy, 138 hard action templates
+               0.00 seconds reachability analysis, yielding 150 facts and 367 actions
+               0.00 seconds creating final representation with 143 relevant facts, 8 relevant fluents
+               0.01 seconds computing LNF
                0.00 seconds building connectivity graph
-             182.10 seconds searching, evaluating 295058 states, to a max depth of 0
-             182.11 seconds total time
+             134.58 seconds searching, evaluating 295058 states, to a max depth of 0
+             134.60 seconds total time
+
 

@@ -123,11 +123,12 @@ step    0: MOVE PLAYER1 Z13 Z18 S ZAPATILLA1
      		Coste Total: 0.00
 
 
-time spent:    0.03 seconds instantiating 2053 easy, 765 hard action templates
-               0.01 seconds reachability analysis, yielding 356 facts and 1321 actions
+time spent:    0.02 seconds instantiating 2053 easy, 765 hard action templates
+               0.00 seconds reachability analysis, yielding 356 facts and 1321 actions
                0.00 seconds creating final representation with 349 relevant facts, 9 relevant fluents
                0.00 seconds computing LNF
                0.00 seconds building connectivity graph
                0.13 seconds searching, evaluating 3058 states, to a max depth of 17
-               0.17 seconds total time
+               0.15 seconds total time
+
 

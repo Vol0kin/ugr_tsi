@@ -186,7 +186,7 @@ a algo nivel:
 
 \subsection{Ejercicio 1.d}
 
-En este ejercicio se han planteado 2 problemas. El primero es un problema con 25 zonas con la forma de una matriz $5 \times 5$, donde
+En este apartado se han planteado 2 problemas. El primero es un problema con 25 zonas con la forma de una matriz $5 \times 5$, donde
 cada zona está conectada con sus zonas adyacentes. Se han situado 5 personajes en el mapa (uno de cada clase) y 5 objetos (uno de cada
 tipo), de tal forma que estuviesen más o menos dispersos de igual forma. Se ha situado al jugador en el centro del mapa y orientado
 hacia el sur (como en todos los problemas, ya que no se especifica nunca que el jugador tenga una determinada orientación inicial).
@@ -230,7 +230,7 @@ valor de \textbf{traveled} de dicho jugador con el valor de \textbf{distance} co
 
 \subsection{Ejercicio 2.b}
 
-En este ejercicio se han planteado de nuevo dos problemas. El primero de ellos tiene exactamente la misma descripción que el problema
+En este apartado se han planteado de nuevo dos problemas. El primero de ellos tiene exactamente la misma descripción que el problema
 de las 25 zonas del ejercicio anterior, solo que se han añadido costes entre las zonas. El plan que se obtuvo del planificador sin
 era el más largo, pero a la vez también el más rápido, ya que no buscaba minimizar la distancia total viajada. Se ha probado también a
 obtener un plan con optimización por \textit{BFS} y por búsqueda con $g = 1$ y $h = 1$. Los resultados es que en el primer caso se
@@ -251,7 +251,7 @@ A continuación se ofrece una descripción de las decisiones de diseño tomadas 
 
 \subsection{Ejercicio 3.a}
 
-En este ejercicio se han añadido una serie de nuevas constantes, tipos y predicados. Las constantes que se han añadido son para
+En este apartado se han añadido una serie de nuevas constantes, tipos y predicados. Las constantes que se han añadido son para
 representar el tipo de superficie de cada zona. Se han hecho contantes ya que no interesa tener instancias de ellas debido a que son
 más una propiedad o atributo de un concepto que una entidad como tal.
 
@@ -338,17 +338,211 @@ heurística equilibrada que con la de \textit{BFS}.
 
 A continuación se ofrece una descripción de las decisiones de diseño tomadas a la hora de realizar el ejercicio 4.
 
+\subsection{Ejercicio 4.a}
+
+En este apartado se han creado dos nuevas funciones. La primera es una función que almacena la cantidad de puntos totales que se
+han obtenido. De momento, esta función solo se puede utilizar para un jugador, y sirve como un contador de la cantidad de puntos
+que ha obtenido este jugador. Sin embargo, en ejercicios posteriores esta función será utilizada para acumular la cantidad de puntos
+que han conseguido todos los jugadores en conjunto, ya que como tal la función no hace referencia a ningún jugador en concreto, si no 
+a todos los que hay en el mapa. También tiene la ventaja de que esta función se puede utilizar también para especificarle al jugador
+cuántos puntos se quieren conseguir (al ponerla en \textit{goal}. La segunda función que se ha implementado es una que permite asociar
+una cantidad de puntos que ortorga uno de los personajes del mapa al entregarle uno de los objetos que hay en el mapa. Se ha diseñado
+de esta forma ya que en PDDL no se pueden representar funciones entre dos tipos (el tipo de personaje y el tipo de objeto, por
+ejemplo), si no que se tiene que representar con las instancias. Esto, por una parte, implica que las descripciones de los problemas
+serán más grandes, ya que para cada instancia de objeto, se tiene que escpecificar cuántos puntos proporciona \textbf{cada una de las
+instancias de los personajes}. Sin embargo, esto facilita algunas cosas, y es que no se tiene que comprobar de qué tipo es el objeto
+que se entrega y de qué tipo es el personaje para poder obtener la cantidad de puntos que se ortorgan, si no que simplemente basta ver
+la cantidad de puntos asociada a las dos instancias.
+
+A continuación se pueden ver las dos nuevas funciones:
+
+\begin{algorithm}[H]
+\begin{lstlisting}[
+  caption={Modificación del dominio para permitir puntuaciones.},
+  label={lst:pddlmove},
+  language=PDDL]
+(:functions
+    (total_score)
+    (score ?n - npc ?o - items)
+)
+\end{lstlisting}
+\end{algorithm}
+
+Las acciones también se han visto modificadas, ya que ahora al entregar un objeto a un personaje, se tiene que contabilizar cuántos
+puntos se le proporcionan. Por tanto, cada vez que se le entregue un objeto a un personaje, \textbf{total\_score} se va a ver
+incrementado en una cantidad especificada por la función \textbf{score}.
+
+Para ilustrar mejor esto, si por ejemplo el jugador le entrega un objeto \textbf{manzana1} a un personaje \textbf{bruja1}, se verá
+que la función \textbf{(total\_score)} se ha incrementado en la cantidad de puntos dada por la función
+\textbf{(score bruja1 manzana1)}.
+
+\subsection{Ejercicio 4.b}
+
+En este apartado se han probado tres problemas. El primero es una modificación del problema de 25 zonas, dejando las mismas zonas
+y personajes pero cambiando los objetos para que sean solo manzanas y oscars, y especificando que se tienen que conseguir 80 puntos
+mínimo. El planificador es capaz de encontrar un plan muy rápidamente en el que en total consigue 84 puntos.
+
+El segundo es una modificación del problema de las 13 zonas, dejando las zonas tal y como estaban y cambiando todos los objetos por
+oscars y manzanas y añadiendo más objetos de estos tipos. Se especificaba que se consiguiesen 50 puntos mínimo, y se consiguieron
+exactamente 50 puntos. Además, se probó a optimizar el plan con una búsqueda equilibrada, y se consiguió un plan con la misma
+longitud. Sin embargo, el tiempo que se ha necesitado para obtener el plan, a pesar de que el problema no era muy grande, fue de poco
+más de 2 minutos. Con lo cuál, a partir de ahora no se probará a optimizar ningún problema de nuevo, ya que los tiempos de ejecución
+se han visto incrementados demasiado.
+
+El tercero es una extensión del problema de 25 zonas, solo que esta vez conservando los mismos objetos, personajes y zonas de antes
+y añadiendo objetos nuevos de distintas clases. Se ha especificado que se obtuviesen 80 puntos, y el planificador encontró un plan
+en el que se entregaban todos los objetos y el jugador conseguía 82 puntos en total, consiguiendo por tanto el objetivo propuesto.
+
 \section{Ejercicio 5}
 
 A continuación se ofrece una descripción de las decisiones de diseño tomadas a la hora de realizar el ejercicio 5.
+
+\subsection{Ejercicio 5.a}
+
+En este apartado se ha modificado el dominio para poder representar que existen personajes con bolsillo y cuál es su capacidad.
+
+Para lo primero, se ha utilizado un predicado nuevo que indica que un determinado personaje tiene bolsillo, y por tanto, que tiene
+una capacidad limitada de recibir objetos. Esto se ha hecho para poder distinguir a los personajes con bolsillos de los que
+no tienen, lo cuál influirá en la acción que se aplique en cada caso al entregar un objeto, ya que ahora hay dos.
+
+Para lo segundo, se ha creado una función que indica cuál es la capacidad del bolsillo del personaje. Esto se ha hecho así para
+aprovechar la función que teníamos antes que contaba cuántos objetos había recibido un personaje. Si se da el caso de que el
+número de objetos recibidos coincide con la capacidad del bolsillo, no se le pueden entregar más objetos a ese personaje (en caso
+de disponer de bolsillo; los personajes sin bolsillo pueden recibir infinitos objetos).
+
+Las acciones también se han visto modificadas. Ahora existen dos acciones para entregar objetos. Una es una modificación de la que
+ya teníamos antes, solo que ahora se comprueba que el personaje en cuestión no tiene bolsillo. La segunda es una extensión para los
+personajes con bolsillos, donde se comprueba que el personaje tiene bolsillo y que la capacidad del bolsillo del personaje es mayor
+que la cantidad de objetos que se le han entregado hasta el momento. Lo que se modifica dentro de estas dos acciones, sin embargo,
+no ha cambiado.
+
+Los nuevos predicados y funciones que se añaden se pueden ver a continuación: 
+
+\begin{algorithm}[H]
+\begin{lstlisting}[
+  caption={Modificación del dominio para permitir el uso de bolsillos para los personajes.},
+  label={lst:pddlmove},
+  language=PDDL]
+(:predicates
+	(has-pocket ?n - npc)
+)
+(:functions
+    (pocket-capacity ?n - npc)
+)
+\end{lstlisting}
+\end{algorithm}
+
+\subsection{Ejercicio 5.b}
+
+En este apartado se han probado tres problemas. El primero es una modificación del problema de las 25 zonas del ejercicio anterior
+en el que había muchos objetos de todos los tipos (el tercer problema). En este caso, se ha indicado que \textbf{leonardo1} y
+\textbf{profesor1} ambos tenían bolsillos y una capacidad de bolsillo de 2. El objetivo era conseguir 60 puntos entregando objetos.
+El planificador consiguió encontrar un plan en el que entregaba la mayoría de objetos, sin pasarse nunca de la cantidad de objetos
+que tenía que entregar a los personajes con bolsillos consiguiendo en total 61 puntos.
+
+El segundo problema es una modificación del problema de las 13 zonas del ejercicio anterior (solo con manzanas y oscars). Todos los
+personajes tienen bolsillos, y el personaje \textbf{witch1} tiene un bolsillo de capacidad 0. El resto tienen bolsillos de capacidades
+iguales o superiores a 1. El personaje \textbf{leo1} tiene un bolsillo de capacidad 3. El objetivo era conseguir 20 puntos, forzando
+que no pueda entregar manzanas a la bruja y que entregase oscars a Leonardo, ya que es el que mayores puntos permitía obtener. El
+planificador obtuvo un plan en el que se entregaban 4 objetos y conseguía 24 puntos. En este caso, solo entregó un objeto a
+\textbf{leo1} (el objeto final), posiblemente por como estuviesen distribuidos los objetos y los personajes.
+
+El tercer problema es una modificación del anterior, solo que ahora \textbf{leo1} tiene una capacidad de bolsillo de 0 (no puede
+recibir objetos) y el personaje \textbf{witch1} tiene una capacidad de bolsillo de 1. El resto de personajes tiene una capacidad
+de bolsillo de 1. El objetivo es de nuevo conseguir 20 puntos, solo que esta vez el jugador está mucho más limitado a la hora de
+entregar objetos a personajes, ya que muchos de los personajes le darán una cantidad de puntos subóptima con los objetos que hay
+en el mapa, ya que solo la bruja le podrá aportar 10 puntos. El planificador encontró un plan en el que consguía que el jugador
+obtenía exactamente 20 puntos, entregando eso sí una de las manzanas a la bruja.
+
 
 \section{Ejercicio 6}
 
 A continuación se ofrece una descripción de las decisiones de diseño tomadas a la hora de realizar el ejercicio 6.
 
+\subsection{Ejercicio 6.b}
+
+En este apartado se ha modificado el dominio del problema y se han planteado 3 problemas al planificador para ver si era capaz de
+resolverlos.
+
+En cuanto a las modificaciones, se ha añadido una nueva función que permita ir acumulando la puntuación que recibe
+cada jugador, aprovechando la función \textbf{total} para acumular la puntuación que han conseguido entre todos los jugadores. De
+esta forma, se pueden contabilizar los puntos específicos de cada jugador y los globales por separado, pudiendo por tanto especificar
+objetivos sobre cuántos puntos debe conseguir cada jugador y cuántos puntos se deben conseguir en total.
+
+Este añadido se puede ver en la siguiente función:
+
+\begin{algorithm}[H]
+\begin{lstlisting}[
+  caption={Modificación del dominio para permitir contabilizar los puntos de cada jugador.},
+  label={lst:pddlmove},
+  language=PDDL]
+(:functions
+    (player-score ?p)
+)
+\end{lstlisting}
+\end{algorithm}
+
+En cuanto a las acciones modificadas, se han modificado las dos acciones de entregar un objeto. Ahora cada una de ellas acumula en los
+puntos del jugador que le ha entregado el objeto, los puntos que se reciben por entregar ese objeto a ese personaje.
+
+Pasando ahora a hablar de los problemas, el primero de ellos es una modificación del problema de las 25 zonas del ejercicio anterior,
+solo que ahora con 2 jugadores y cada uno de ellos tiene que obtener un mínimo de 20 puntos, consiguiendo en total entre los dos
+60 puntos. El planificador fue capaz de encontrar un plan en el que ambos consiguiesen la cantidad mínima de puntos, aun teniendo
+que pasar por ejemplo por un bosque. Sin embargo, la cantidad individual de puntos que conseguía cada uno no estaba equilibrado (había
+un jugador que conseguía más puntos que el otro).
+
+El segundo y tercer problema son una modificación del problema de las 13 zonas con solo manzanas y oscars. Todos los personajes tienen
+bolsillos de capacidad mayor o igual a 1, y en los dos problemas los dos jugadores tienen que obtener un mínimo de 10 puntos cada uno.
+En uno de los problemas se tienen que obtener 20 puntos en total, mientras que en el otro 30. El planificador es capaz de encontrar
+en ambos casos planes para resolver los problemas, resolviéndolos satisfactoriamente y consiguiendo las cantidades necesarias de
+puntos.
+
 \section{Ejercicio 7}
 
 A continuación se ofrece una descripción de las decisiones de diseño tomadas a la hora de realizar el ejercicio 7.
+
+\subsection{Ejercicio 7.a}
+
+En este apartado se ha modificado el dominio de los ejercicios anteriores para representar los dos nuevos tipos de jugadores: el
+\textit{Piker} y el \textit{Dealer}. Estos dos nuevos tipos se han creado como subtipos del tipo \textit{Player} que teníamos
+anteriormente con el objetivo de abstraer los dos tipos para las acciones comunes que tienen (como por ejemplo girar, moverse, meter
+un objeto en la mochila y sacarlo y soltar un objeto). Estos nuevos tipos se pueden ver a continuación:
+
+\begin{algorithm}[H]
+\begin{lstlisting}[
+  caption={Modificación del dominio para permitir crear nuevos tipos de jugadores.},
+  label={lst:pddlmove},
+  language=PDDL]
+(:types
+	Picker Dealer - Player
+)
+\end{lstlisting}
+\end{algorithm}
+
+En lo referente a las acciones, se ha modificado la acción de coger un objeto del suelo para que solo la pueda llevar a cabo un
+jugador del tipo \textit{Picker}. Las dos acciones de entregar objetos a personajes con y sin bolsillo han sido modificadas para que
+solo las pueda llevar a cabo un personaje de tipo \textit{Dealer}. Se ha creado una nueva acción para que un jugador de tipo
+\textit{Picer} pueda darle un objeto a un jugador de tipo \textit{Dealer}. Para ello, los dos jugadores tienen que estar en la misma
+zona, el \textit{Picker} tiene que tener el objeto cogido y el \textit{Dealer} tiene que tener la mano vacía. El resultado es que
+el \textit{Picker} pasa a no tener el objeto cogido y a tener la mano vacía y el \textit{Dealer} pasa a tener el objeto cogido y
+deja de tener la mano vacía.
+
+\subsection{Ejercicio 7.b}
+
+De nuevo, como se ha realizado anteriormente, se han probado tres problemas. El primero es una modificación del problema de las 25
+zonas del apartado anterior, cambiando los tipos de los jugadores para que uno haga el papel de \textit{Picker} y el otro el papel
+de \textit{Dealer}. También se ha especificado que el \textit{Dealer}, como mínimo, tiene que conseguir como mínimo 20 puntos y
+un mínimo de 60 puntos en total (tendrá que hacer todo el tabajo en este caso al no tener otro \textit{Dealer}). El planificador
+fue capaz de encontrar un plan, tardando sin embargo aproximadamente 18 segundos en encontrarlo.
+
+El segundo y el tercer problema son una modficiación del problema de las 13 zonas del ejercicio anterior. En el primero de ellos
+hay de nuevo un \textit{Picker} y un \textit{Dealer}, y el \textit{Dealer} tiene que conseguir un mínimo de 10 puntos, y en total
+se tienen que conseguir 20 puntos (de nuevo tiene que hacer todo el trabajo). En cambio, en el otro problema hay un \textit{Picker}
+y dos jugadores de tipo \textit{Dealer}, y cada uno de ellos tiene que conseguir un mínimo de 10 puntos, llegando entre los dos a 30
+en total. En ambos casos, el planificador consiguió encontrar un plan que satisfaciese las restricciones, demostrando que funciona
+incluso para más de un \textit{Dealer}. Sin embargo, en el segundo caso tardó poco más de 1 minuto en obtener el plan, con lo cuál,
+parece que aún para un problema simple, si se empiezan a meter demasiados elementos, el planificador tiene problemas para encontrar
+planes buenos en un tiempo pequeño.
 
 \end{document}
 
