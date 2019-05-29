@@ -149,7 +149,7 @@
   )
 )
  
-(:import "Primitivas-Zenotravel.pddl") 
+(:import "Primitivas-ZenoTravel.pddl") 
 
 
 )
