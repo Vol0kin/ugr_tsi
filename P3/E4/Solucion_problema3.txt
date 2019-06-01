@@ -1,0 +1,46 @@
+:action (refuel a6 Granada) start: 05/06/2007 08:00:00 end: 14/10/2007 14:00:00
+:action (zoom a6 Granada Almeria) start: 14/10/2007 14:00:00 end: 15/10/2007 02:00:00
+:action (board p2 a6 Almeria) start: 15/10/2007 02:00:00 end: 15/10/2007 03:00:00
+:action (zoom a6 Almeria Barcelona) start: 15/10/2007 03:00:00 end: 17/10/2007 13:00:00
+:action (debark p2 a6 Barcelona) start: 17/10/2007 13:00:00 end: 17/10/2007 14:00:00
+:action (board p3 a6 Barcelona) start: 17/10/2007 14:00:00 end: 17/10/2007 15:00:00
+:action (refuel a6 Barcelona) start: 17/10/2007 15:00:00 end: 15/02/2008 23:00:00
+:action (zoom a6 Barcelona Madrid) start: 15/02/2008 23:00:00 end: 17/02/2008 19:00:00
+:action (debark p3 a6 Madrid) start: 17/02/2008 19:00:00 end: 17/02/2008 20:00:00
+:action (fly a3 Malaga Cordoba) start: 17/02/2008 20:00:00 end: 18/02/2008 04:00:00
+:action (board p4 a3 Cordoba) start: 18/02/2008 04:00:00 end: 18/02/2008 05:00:00
+:action (board p5 a3 Cordoba) start: 18/02/2008 05:00:00 end: 18/02/2008 06:00:00
+:action (refuel a3 Cordoba) start: 18/02/2008 06:00:00 end: 27/03/2008 19:00:00
+:action (zoom a3 Cordoba Sevilla) start: 27/03/2008 19:00:00 end: 27/03/2008 23:00:00
+:action (debark p5 a3 Sevilla) start: 27/03/2008 23:00:00 end: 28/03/2008 00:00:00
+:action (debark p4 a3 Sevilla) start: 28/03/2008 00:00:00 end: 28/03/2008 01:00:00
+:action (refuel a3 Sevilla) start: 28/03/2008 01:00:00 end: 26/05/2008 16:00:00
+:action (zoom a3 Sevilla Cordoba) start: 26/05/2008 16:00:00 end: 26/05/2008 20:00:00
+:action (board p6 a3 Cordoba) start: 26/05/2008 20:00:00 end: 26/05/2008 21:00:00
+:action (refuel a3 Cordoba) start: 26/05/2008 21:00:00 end: 25/07/2008 11:00:00
+:action (fly a3 Cordoba Cadiz) start: 25/07/2008 11:00:00 end: 26/07/2008 00:00:00
+:action (debark p6 a3 Cadiz) start: 26/07/2008 00:00:00 end: 26/07/2008 01:00:00
+:action (refuel a1 Madrid) start: 26/07/2008 01:00:00 end: 11/11/2008 08:00:00
+:action (zoom a1 Madrid Malaga) start: 11/11/2008 08:00:00 end: 12/11/2008 11:00:00
+:action (board p7 a1 Malaga) start: 12/11/2008 11:00:00 end: 12/11/2008 12:00:00
+:action (zoom a1 Malaga Bilbao) start: 12/11/2008 12:00:00 end: 14/11/2008 11:00:00
+:action (debark p7 a1 Bilbao) start: 14/11/2008 11:00:00 end: 14/11/2008 12:00:00
+:action (refuel a4 Barcelona) start: 14/11/2008 12:00:00 end: 06/06/2009 17:00:00
+:action (zoom a4 Barcelona Gibraltar) start: 06/06/2009 17:00:00 end: 09/06/2009 01:00:00
+:action (board p8 a4 Gibraltar) start: 09/06/2009 01:00:00 end: 09/06/2009 02:00:00
+:action (fly a4 Gibraltar Bilbao) start: 09/06/2009 02:00:00 end: 13/06/2009 17:00:00
+:action (debark p8 a4 Bilbao) start: 13/06/2009 17:00:00 end: 13/06/2009 18:00:00
+:action (fly a4 Bilbao Sevilla) start: 13/06/2009 18:00:00 end: 17/06/2009 15:00:00
+:action (board p9 a4 Sevilla) start: 17/06/2009 15:00:00 end: 17/06/2009 16:00:00
+:action (fly a4 Sevilla Cordoba) start: 17/06/2009 16:00:00 end: 18/06/2009 06:00:00
+:action (debark p9 a4 Cordoba) start: 18/06/2009 06:00:00 end: 18/06/2009 07:00:00
+:action (fly a4 Cordoba Huelva) start: 18/06/2009 07:00:00 end: 19/06/2009 07:00:00
+:action (board p10 a4 Huelva) start: 19/06/2009 07:00:00 end: 19/06/2009 08:00:00
+:action (refuel a4 Huelva) start: 19/06/2009 08:00:00 end: 31/12/2009 02:00:00
+:action (fly a4 Huelva Granada) start: 31/12/2009 02:00:00 end: 01/01/2010 13:00:00
+:action (debark p10 a4 Granada) start: 01/01/2010 13:00:00 end: 01/01/2010 14:00:00
+:action (refuel a1 Bilbao) start: 01/01/2010 14:00:00 end: 04/05/2010 05:00:00
+:action (zoom a1 Bilbao Huelva) start: 04/05/2010 05:00:00 end: 06/05/2010 04:00:00
+:action (board p11 a1 Huelva) start: 06/05/2010 04:00:00 end: 06/05/2010 05:00:00
+:action (fly a1 Huelva Malaga) start: 06/05/2010 05:00:00 end: 07/05/2010 11:00:00
+:action (debark p11 a1 Malaga) start: 07/05/2010 11:00:00 end: 07/05/2010 12:00:00

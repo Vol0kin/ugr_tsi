@@ -74,7 +74,7 @@
 		        (mover-avion ?a ?c1 ?c)
 		        (debark ?p ?a ?c )))
   
-    (:method EsperarCogerAvion
+    (:method WaitCatchFlight
       :precondition(and (at ?p - person ?c1 - city)
                         (at ?a - aircraft ?c2 - city)
                     )

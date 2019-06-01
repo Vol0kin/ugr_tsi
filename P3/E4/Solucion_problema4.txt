@@ -1,0 +1,47 @@
+:action (refuel a9 Malaga) start: 05/06/2007 08:00:00 end: 03/12/2007 13:00:00
+:action (zoom a9 Malaga Almeria) start: 03/12/2007 13:00:00 end: 03/12/2007 21:00:00
+:action (board p2 a9 Almeria) start: 03/12/2007 21:00:00 end: 03/12/2007 22:00:00
+:action (zoom a9 Almeria Cadiz) start: 03/12/2007 22:00:00 end: 04/12/2007 17:00:00
+:action (debark p2 a9 Cadiz) start: 04/12/2007 17:00:00 end: 04/12/2007 18:00:00
+:action (board p5 a7 Granada) start: 04/12/2007 18:00:00 end: 04/12/2007 19:00:00
+:action (board p4 a7 Granada) start: 04/12/2007 19:00:00 end: 04/12/2007 20:00:00
+:action (board p13 a7 Granada) start: 04/12/2007 20:00:00 end: 04/12/2007 21:00:00
+:action (refuel a7 Granada) start: 04/12/2007 21:00:00 end: 13/05/2008 08:00:00
+:action (zoom a7 Granada Gibraltar) start: 13/05/2008 08:00:00 end: 13/05/2008 14:00:00
+:action (debark p4 a7 Gibraltar) start: 13/05/2008 14:00:00 end: 13/05/2008 15:00:00
+:action (debark p5 a7 Gibraltar) start: 13/05/2008 15:00:00 end: 13/05/2008 16:00:00
+:action (zoom a7 Gibraltar Granada) start: 13/05/2008 16:00:00 end: 13/05/2008 22:00:00
+:action (board p6 a7 Granada) start: 13/05/2008 22:00:00 end: 13/05/2008 23:00:00
+:action (zoom a7 Granada Cordoba) start: 13/05/2008 23:00:00 end: 14/05/2008 03:00:00
+:action (debark p6 a7 Cordoba) start: 14/05/2008 03:00:00 end: 14/05/2008 04:00:00
+:action (board p8 a4 Barcelona) start: 14/05/2008 04:00:00 end: 14/05/2008 05:00:00
+:action (board p17 a4 Barcelona) start: 14/05/2008 05:00:00 end: 14/05/2008 06:00:00
+:action (refuel a4 Barcelona) start: 14/05/2008 06:00:00 end: 04/12/2008 09:00:00
+:action (zoom a4 Barcelona Madrid) start: 04/12/2008 09:00:00 end: 05/12/2008 16:00:00
+:action (debark p8 a4 Madrid) start: 05/12/2008 16:00:00 end: 05/12/2008 17:00:00
+:action (board p19 a4 Madrid) start: 05/12/2008 17:00:00 end: 05/12/2008 18:00:00
+:action (board p9 a4 Madrid) start: 05/12/2008 18:00:00 end: 05/12/2008 19:00:00
+:action (zoom a4 Madrid Bilbao) start: 05/12/2008 19:00:00 end: 06/12/2008 15:00:00
+:action (debark p9 a4 Bilbao) start: 06/12/2008 15:00:00 end: 06/12/2008 16:00:00
+:action (debark p19 a4 Bilbao) start: 06/12/2008 16:00:00 end: 06/12/2008 17:00:00
+:action (debark p17 a4 Bilbao) start: 06/12/2008 17:00:00 end: 06/12/2008 18:00:00
+:action (zoom a7 Cordoba Malaga) start: 06/12/2008 18:00:00 end: 06/12/2008 22:00:00
+:action (board p10 a7 Malaga) start: 06/12/2008 22:00:00 end: 06/12/2008 23:00:00
+:action (zoom a7 Malaga Jaen) start: 06/12/2008 23:00:00 end: 07/12/2008 04:00:00
+:action (debark p10 a7 Jaen) start: 07/12/2008 04:00:00 end: 07/12/2008 05:00:00
+:action (debark p13 a7 Jaen) start: 07/12/2008 05:00:00 end: 07/12/2008 06:00:00
+:action (zoom a7 Jaen Malaga) start: 07/12/2008 06:00:00 end: 07/12/2008 11:00:00
+:action (board p11 a7 Malaga) start: 07/12/2008 11:00:00 end: 07/12/2008 12:00:00
+:action (zoom a7 Malaga Sevilla) start: 07/12/2008 12:00:00 end: 07/12/2008 17:00:00
+:action (debark p11 a7 Sevilla) start: 07/12/2008 17:00:00 end: 07/12/2008 18:00:00
+:action (board p14 a4 Bilbao) start: 07/12/2008 18:00:00 end: 07/12/2008 19:00:00
+:action (board p15 a4 Bilbao) start: 07/12/2008 19:00:00 end: 07/12/2008 20:00:00
+:action (board p16 a4 Bilbao) start: 07/12/2008 20:00:00 end: 07/12/2008 21:00:00
+:action (zoom a4 Bilbao Madrid) start: 07/12/2008 21:00:00 end: 08/12/2008 17:00:00
+:action (debark p16 a4 Madrid) start: 08/12/2008 17:00:00 end: 08/12/2008 18:00:00
+:action (debark p15 a4 Madrid) start: 08/12/2008 18:00:00 end: 08/12/2008 19:00:00
+:action (debark p14 a4 Madrid) start: 08/12/2008 19:00:00 end: 08/12/2008 20:00:00
+:action (zoom a4 Madrid Huelva) start: 08/12/2008 20:00:00 end: 10/12/2008 02:00:00
+:action (board p18 a4 Huelva) start: 10/12/2008 02:00:00 end: 10/12/2008 03:00:00
+:action (zoom a4 Huelva Sevilla) start: 10/12/2008 03:00:00 end: 10/12/2008 08:00:00
+:action (debark p18 a4 Sevilla) start: 10/12/2008 08:00:00 end: 10/12/2008 09:00:00
