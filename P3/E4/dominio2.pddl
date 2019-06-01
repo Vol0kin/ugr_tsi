@@ -25,6 +25,8 @@
              (hay-fuel-zoom ?a ?c1 ?c2)
              (can-fly ?a ?c1 ?c2)
              (can-zoom ?a ?c1 ?c2)
+             (can-fly-time ?a ?c1 ?c2)
+             (can-zoom-time ?a ?c1 ?c2)
              (destino ?x - person ?y - city)
              )
 (:functions (fuel ?a - aircraft)
@@ -35,7 +37,7 @@
             (fast-burn ?a - aircraft)
             (capacity ?a - aircraft)
             (refuel-rate ?a - aircraft)
-            (total-fuel-used)
+            (total-fuel-used ?a - aircraft)
             (boarding-time)
             (debarking-time)
             (fuel-limit ?a - aircraft)
@@ -52,13 +54,6 @@
   (different ?x ?y) (not (igual ?x ?y)))
 
 
-
-;; este literal derivado se utiliza para deducir, a partir de la información en el estado actual, 
-;; si hay fuel suficiente para que el avión ?a vuele de la ciudad ?c1 a la ?c2
-;; el antecedente de este literal derivado comprueba si el fuel actual de ?a es mayor que 1. 
-;; En este caso es una forma de describir que no hay restricciones de fuel. Pueden introducirse una
-;; restricción más copleja  si en lugar de 1 se representa una expresión más elaborada (esto es objeto de
-;; los siguientes ejercicios).
 (:derived 
   (hay-fuel-fly ?a - aircraft ?c1 - city ?c2 - city)
   (> (fuel ?a) (* (distance ?c1 ?c2) (slow-burn ?a)))
@@ -71,14 +66,25 @@
 
 (:derived
   (can-fly ?a - aircraft ?c1 - city ?c2 - city)
-  (< (+ (total-fuel-used) (* (distance ?c1 ?c2) (slow-burn ?a))) (fuel-limit ?a))
+  (< (+ (total-fuel-used ?a) (* (distance ?c1 ?c2) (slow-burn ?a))) (fuel-limit ?a))
 )
 
 (:derived
   (can-zoom ?a - aircraft ?c1 - city ?c2 - city)
-  (< (+ (total-fuel-used) (* (distance ?c1 ?c2) (fast-burn ?a))) (fuel-limit ?a))
+  (< (+ (total-fuel-used ?a) (* (distance ?c1 ?c2) (fast-burn ?a))) (fuel-limit ?a))
 )
 
+(:derived
+  (can-fly-time ?a - aircraft ?c1 - city ?c2 - city)
+  (< (/ (distance ?c1 ?c2) (slow-speed ?a)) (time-limit ?a))
+)
+
+(:derived
+  (can-zoom-time ?a - aircraft ?c1 - city ?c2 - city)
+  (< (/ (distance ?c1 ?c2) (fast-speed ?a)) (time-limit ?a))
+)
+
+; Tarea para transportar una persona
 (:task transport-person
 	:parameters (?p - person ?c - city)
 	
@@ -118,6 +124,7 @@
     :precondition(and
       (hay-fuel-zoom ?a ?c1 ?c2)
       (can-zoom ?a ?c1 ?c2)
+      (can-zoom-time ?a ?c1 ?c2)
     )
     :tasks(
       (zoom ?a ?c1 ?c2)
@@ -127,6 +134,7 @@
     :precondition(and
       (not (hay-fuel-zoom ?a ?c1 ?c2))
       (can-zoom ?a ?c1 ?c2)
+      (can-zoom-time ?a ?c1 ?c2)
     )
     :tasks(
       (refuel ?a ?c1)
@@ -137,6 +145,7 @@
     :precondition(and
       (hay-fuel-fly ?a ?c1 ?c2)
       (can-fly ?a ?c1 ?c2)
+      (can-fly-time ?a ?c1 ?c2)
     )
     :tasks(
       (fly ?a ?c1 ?c2)
@@ -146,6 +155,7 @@
     :precondition(and
       (not (hay-fuel-fly ?a ?c1 ?c2))
       (can-fly ?a ?c1 ?c2)
+      (can-fly-time ?a ?c1 ?c2)
     )
     :tasks(
       (refuel ?a ?c1)
@@ -160,7 +170,7 @@
   ; Embarcar de forma recursiva aquellos pasajeros en el aeropuerto
   (:method RecursiveBoard
     :precondition(and
-      (at ?p - person ?c)
+      (at ?p ?c)
       (not (destino ?p ?c))
       (< (passengers ?a) (max-passengers ?a))
     )
@@ -182,15 +192,14 @@
 
   (:method RecursiveDebark
     :precondition(and
-      (in ?p - person ?a)
-      (at ?a ?c)
+      (in ?p ?a)
       (destino ?p ?c)
     )
     :tasks(
       (debark ?p ?a ?c)
       (debark-all-passengers ?a ?c)
     )
-  )    
+  )   
 
   ; Metodo base del desembarque recursivo
   (:method BaseDebark
