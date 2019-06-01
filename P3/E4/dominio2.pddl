@@ -170,7 +170,7 @@
   ; Embarcar de forma recursiva aquellos pasajeros en el aeropuerto
   (:method RecursiveBoard
     :precondition(and
-      (at ?p ?c)
+      (at ?p - person ?c)
       (not (destino ?p ?c))
       (< (passengers ?a) (max-passengers ?a))
     )
@@ -192,7 +192,7 @@
 
   (:method RecursiveDebark
     :precondition(and
-      (in ?p ?a)
+      (in ?p - person ?a)
       (destino ?p ?c)
     )
     :tasks(
