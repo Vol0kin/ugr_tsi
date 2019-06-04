@@ -205,7 +205,19 @@ entrar en demasiado detalle en la implementación:
 
 Para especificar las tareas objetivo se tiene que especificar a dónde se quiere transportar cada persona, tal y como se hacía en los
 anteriores ejercicios. Por tanto, en las tareas objetivo aparecerán una serie de \textbf{transport-person}, donde la ciudad a la
-que se quiere transportar la persona tiene que ser la misma que la ciudad destino.
+que se quiere transportar la persona tiene que ser la misma que la ciudad destino, ya que en caso contrario se tendrán problemas.
+
+Respecto a la estrategia que se sigue en este ejercicio en cuanto a tiempos de viaje y gasto de combustible, se sigue un enfoque
+igual que en el ejercicio anterior. Es decir, se prioriza el tiempo de viaje (por tanto, \textbf{zoom} tendrá una mayor prioridad
+que \textbf{fly}), aumentando por tanto el gasto de combustible. Esto se debe a que minimizar los dos objetivos
+a la vez es imposible, ya que volar en menos tiempo implica gastar más combustible, y gastar menos combustible implica viajar
+más lento. Por tanto, se ha elegido seguir un enfoque que priorice los tiempos de viajes, dando por tanto prioridad a la hora
+de expandir el árbol de decisiones a la acción \textbf{zoom} y después a \textbf{fly}. No obstante, se ha tenido en cuenta cuáles
+son las capacidades de combustible de los aviones y los tiempos máximos que estos pueden viajar. Como cada uno tiene sus propias
+características, el planificador se encargará de escoger la más adecuada. En cuanto a las políticas de embarque se
+ha intentado que se embarquen todos los pasajeros posibles cuyo destino no es la ciudad actual en la que se encuentran. Sin embargo,
+el planificador se encargará de decidir quiénes deben embarcar, lo cuál puede resultar en que casi siempre se dejen pasajeros
+en el aeropuerto ya que no comparten destino, creando por tanto planes subóptimos.
 
 A continuación se van a explicar brevemente los problemas planteados. Los planes no van a ser incluidos en la memoria, debido
 a que son más largos. Si se quieren consultar, se han adjuntado algunos archivos que los contienen.
